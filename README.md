@@ -38,8 +38,8 @@ libdragon make
 After that, the ROM should be possible to compile with just `libdragon make`.
 
 ## Credits
-* wermi - main code and graphics
-* kolunio - testing, minor improvements and code review
+* xandrey - initial python code
+* coby - porting to n64
 
 Special thanks to xandrey, wermi, kolunio, GTM_, and GreenSuigi.
 
