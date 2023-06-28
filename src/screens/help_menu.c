@@ -30,6 +30,6 @@ void help_menu_draw() {
         "Fast: 1 - 4 - 8 - mash\n"
         "Faster: 1 - 4 - 6 - mash\n\n"
         "The practice tool will run a 30 frame counter for 1 second once "
-        "you start pressing A or B and display what frames you hit."
+        "you start pressing A and display what frames you hit."
     );
 }

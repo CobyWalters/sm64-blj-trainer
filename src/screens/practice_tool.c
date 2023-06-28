@@ -62,10 +62,10 @@ void practice_tool_draw() {
     text_set_font(FONT_MEDIUM);
     char frame_text[10];
     sprintf(frame_text, "Frame: %d", current_frame);
-    text_draw(15, 15, frame_text, ALIGN_LEFT);
+    text_draw(32, 24, frame_text, ALIGN_LEFT);
     
     /* Draw repo url */
-    text_draw(gfx->width - 12, 225, "github.com/CobyWalters/sm64-blj-trainer", ALIGN_RIGHT);
+    text_draw(gfx->width/2, 201, "github.com/CobyWalters/sm64-blj-trainer", ALIGN_CENTER);
 
     /* Draw starting text */
     if (current_frame == 0) {
@@ -99,7 +99,7 @@ void practice_tool_draw() {
 
     /* Draw the blj frames */
     graphics_set_color(COLOR_GREEN, 0);
-    text_draw_partial(gfx->width/2, gfx->height/2, blj_frame_text, ALIGN_CENTER, 0, red_text_index);
+    text_draw_partial(gfx->width/2, gfx->height/2 - 5, blj_frame_text, ALIGN_CENTER, 0, red_text_index);
     graphics_set_color(COLOR_RED, 0);
-    text_draw_partial(gfx->width/2, gfx->height/2, blj_frame_text, ALIGN_CENTER, red_text_index, 63);
+    text_draw_partial(gfx->width/2, gfx->height/2 - 5, blj_frame_text, ALIGN_CENTER, red_text_index, 63);
 }

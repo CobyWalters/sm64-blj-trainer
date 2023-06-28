@@ -32,5 +32,5 @@ void fps_draw(void) {
     static char fps_text[FPS_TEXT_LEN];
     const char *const fps_text_format = "FPS: %.2f";
     snprintf(fps_text, FPS_TEXT_LEN, fps_text_format, average_fps);
-    text_draw(gfx->width - 12, 15, fps_text, ALIGN_RIGHT);
+    text_draw(gfx->width - 32, 24, fps_text, ALIGN_RIGHT);
 }
