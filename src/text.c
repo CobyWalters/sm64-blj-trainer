@@ -50,6 +50,15 @@ int text_get_line_width(const char s[]) {
     return w;
 }
 
+int text_get_word_width(const char s[]) {
+    const char* s_ = s;
+    int w = 0;
+    for (; *s_ != 0 && *s_ != '\n' && *s_ != ' '; s_++) {
+        w += fonts[current_font].char_widths[(int) *s_];
+    }
+    return w;
+}
+
 /* Draws part of the text, as if the rest of the letters were invisible */
 void text_draw_partial(int x, int y, const char s[], enum TextAlign align, int start, int end) {
 
@@ -58,9 +67,8 @@ void text_draw_partial(int x, int y, const char s[], enum TextAlign align, int s
     int x_offset = align_offset;
     int y_offset = 0;
 
-    for (int i = 0; i < end && s[i] != 0; ++i) {
+    for (int i = 0; s[i] != 0 && i < end; ++i) {
         if (s[i] == '\n') {
-            w = text_get_line_width(s + i);
             x_offset = align_offset;
             y_offset += line_height;
             continue;
@@ -76,51 +84,37 @@ void text_draw(int x, int y, const char s[], enum TextAlign align) {
     text_draw_partial(x, y, s, align, 0, INT_MAX);
 }
 
-int text_get_max_chars_line(const char s[], int width) {
-    const char *s_init = s;
-    const char *s_prev = s;
-    int w = 0;
-    for (; *s != 0; s++) {
-        if (w > width) {
-            if (s_prev == s_init) {
-                return s - s_init;
-            } if (s == s_init) {
-                return 1;
-            } else {
-                return s_prev - s_init;
-            }
-        }
-        if (*s == ' ') {
-            s_prev = s;
-        } else if (*s == '\n') {
-            return s - s_init + 1;
-        }
-        w += fonts[current_font].char_widths[(int)*s];
-    }
-    return s - s_init + 1;
-}
-
 void text_draw_wordwrap(int x, int y, int w, const char s[]) {
-    int x_init = x;
-    while (*s != 0) {
-        while (*s == ' ') s++;
-        for (int count = text_get_max_chars_line(s, w); count > 0; count--) {
-            switch (*s) {
-                case 0:
-                    return;
-                case '\n':
-                    break;
-                case ' ':
-                    x += fonts[current_font].char_widths[(int)*s];
-                    break;
-                default:
-                    graphics_draw_character(gfx->disp, x, y, *s);
-                    x += fonts[current_font].char_widths[(int)*s];
-                    break;
+    
+    int space_width = fonts[current_font].char_widths[(int) ' '];
+    int x_offset = 0;
+    int y_offset = 0;
+
+    for (int i = 0; s[i] != '\0'; ++i) {
+        if (s[i] == '\n') {
+            x_offset = 0;
+            y_offset += line_height;
+            continue;
+        } else if (s[i] == ' ') {
+            int word_width = text_get_word_width(&s[i + 1]);
+            int remaining_width = w - x_offset - space_width;
+
+            if (word_width > remaining_width) {
+                x_offset = 0;
+                y_offset += line_height;
+                continue;
             }
-            s++;
         }
-        x = x_init;
-        y += line_height;
+
+        int char_width = fonts[current_font].char_widths[(int)s[i]];
+        int remaining_width = w - x_offset;
+
+        if (char_width > remaining_width) {
+            x_offset = 0;
+            y_offset += line_height;
+        }
+
+        graphics_draw_character(gfx->disp, x + x_offset, y + y_offset, s[i]);
+        x_offset += char_width;
     }
 }

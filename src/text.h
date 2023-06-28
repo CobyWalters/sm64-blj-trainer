@@ -30,6 +30,7 @@ void text_init();
 void text_set_font(enum Font f);
 void text_set_line_height(int h);
 int text_get_line_width(const char s[]);
+int text_get_word_width(const char s[]);
 void text_draw_partial(int x, int y, const char s[], enum TextAlign align, int start, int end);
 void text_draw(int x, int y, const char s[], enum TextAlign align);
 void text_draw_wordwrap(int x, int y, int w, const char s[]);
