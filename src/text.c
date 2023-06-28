@@ -45,42 +45,35 @@ int text_get_line_width(const char s[]) {
     const char* s_ = s;
     int w = 0;
     for (; *s_ != 0 && *s_ != '\n'; s_++) {
-        w += fonts[current_font].char_widths[(int)*s_];
+        w += fonts[current_font].char_widths[(int) *s_];
     }
     return w;
 }
 
-void text_draw(int x, int y, const char s[], enum TextAlign align) {
+/* Draws part of the text, as if the rest of the letters were invisible */
+void text_draw_partial(int x, int y, const char s[], enum TextAlign align, int start, int end) {
 
-    const char* s_ = s;
-    int x_init = x;
+    int w = text_get_line_width(s);
+    int align_offset = (align == ALIGN_LEFT ? 0 : (align == ALIGN_RIGHT? -w : -w/2));
+    int x_offset = align_offset;
+    int y_offset = 0;
 
-reposition:
-    int w = text_get_line_width(s_);
-    if (align == ALIGN_RIGHT) {
-        x -= w;
-    }
-    if (align == ALIGN_CENTER) {
-        x -= w / 2;
-    }
-
-    for (; *s_ != 0; s_++) {
-        switch (*s_) {
-        case '\n':
-            x = x_init;
-            y += line_height;
-            s_++;
-            goto reposition;
-            break;
-        case ' ':
-            x += fonts[current_font].char_widths[(int)*s_];
-            break;
-        default:
-            graphics_draw_character(gfx->disp, x, y, *s_);
-            x += fonts[current_font].char_widths[(int)*s_];
-            break;
+    for (int i = 0; i < end && s[i] != 0; ++i) {
+        if (s[i] == '\n') {
+            w = text_get_line_width(s + i);
+            x_offset = align_offset;
+            y_offset += line_height;
+            continue;
+        } else if (s[i] != ' ' && i >= start) {
+            graphics_draw_character(gfx->disp, x + x_offset, y + y_offset, s[i]);
         }
+        x_offset += fonts[current_font].char_widths[(int) s[i]];
     }
+}
+
+/* Draws the whole text */
+void text_draw(int x, int y, const char s[], enum TextAlign align) {
+    text_draw_partial(x, y, s, align, 0, INT_MAX);
 }
 
 int text_get_max_chars_line(const char s[], int width) {
