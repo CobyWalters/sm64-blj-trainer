@@ -12,11 +12,12 @@
 
 #include <string.h>
 #include "../fps.h"
+#include "../input.h"
 #include "../system.h"
 #include "../text.h"
 
 int get_first_bad_input_frame(void);
-void practice_tool_tick(game_state_t* game_state, const gamepad_state_t *const gamepad);
+void practice_tool_tick(game_state_t* game_state);
 void practice_tool_draw(void);
 
 #endif

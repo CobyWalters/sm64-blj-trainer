@@ -10,10 +10,9 @@
 #include "practice_tool.h"
 
 static bool blj_frames[30];
-static bool is_a_held = false;
 static int current_frame = 0;
 static int frame_gap = 0;
-
+  
 int get_first_bad_input_frame() {
     if (blj_frames[1])  return 2;
     if (blj_frames[2])  return 3;
@@ -24,24 +23,21 @@ int get_first_bad_input_frame() {
     return -1;
 }
 
-void practice_tool_tick(game_state_t* game_state, const gamepad_state_t *const gamepad) {
+void practice_tool_tick(game_state_t* game_state) {
     
-    if (gamepad->B) {
+    if (b_press()) {
         *game_state = MAIN_MENU;
     }
-
-    bool a_press = (!is_a_held && gamepad->A);
-    is_a_held = gamepad->A;
 
     /* Advance the frame if timer is running */
     if (current_frame > 0 && current_frame < 30) {
         ++current_frame;
     }
 
-    if (!a_press) {
+    if (!a_press()) {
         ++frame_gap;
     } else {
-        if (current_frame == 0 || frame_gap > 5) {
+        if (current_frame == 0 || frame_gap > 4) {
             /* Reset the timer if needed */
             for (int i = 0; i < 30; ++i) {
                 blj_frames[i] = false;
@@ -57,6 +53,8 @@ void practice_tool_draw() {
 
     /* Draw FPS*/
     fps_draw();
+
+    //input_draw();
 
     /* Draw frame counter */
     text_set_font(FONT_MEDIUM);

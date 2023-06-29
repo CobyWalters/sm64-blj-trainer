@@ -10,10 +10,11 @@
 #ifndef MAIN_MENU_H
 #define MAIN_MENU_H
 
+#include "../input.h"
 #include "../system.h"
 #include "../text.h"
 
-void main_menu_tick(game_state_t* game_state, const gamepad_state_t *const gamepad);
+void main_menu_tick(game_state_t* game_state);
 void main_menu_draw(void);
 
 #endif

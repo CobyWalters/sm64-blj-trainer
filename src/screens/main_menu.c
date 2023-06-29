@@ -18,8 +18,8 @@ static const char *options[] = {
 static int menu_selection = 0;
 static int menu_options = sizeof(options)/sizeof(char*);
 
-void main_menu_tick(game_state_t* game_state, const gamepad_state_t *const gamepad) {
-    if (gamepad->A) {
+void main_menu_tick(game_state_t* game_state) {
+    if (a_press()) {
         if (menu_selection == 0) {
             *game_state = PRACTICE_TOOL;
         } else if (menu_selection == 1) {
@@ -27,9 +27,9 @@ void main_menu_tick(game_state_t* game_state, const gamepad_state_t *const gamep
         } else if (menu_selection == 2) {
             *game_state = HELP_MENU;
         }
-    } else if (gamepad->up) {
+    } else if (stick_up() || dpad_up()) {
         menu_selection = (menu_selection - 1 + menu_options) % menu_options;
-    } else if (gamepad->down) {
+    } else if (stick_down() || dpad_down()) {
         menu_selection = (menu_selection + 1) % menu_options;
     }
 }

@@ -49,6 +49,8 @@ int main(void) {
     /* Initialize game state */
     game_state_t game_state = MAIN_MENU;
 
+    bool first_frame = true;
+
     /* Run the main loop */
     while (1) {
 
@@ -58,22 +60,27 @@ int main(void) {
 
         /* Update controller state */
         controller_scan();
-        const controllers_state_t controllers = get_keys_down();
-        const gamepad_state_t *const gamepad = &controllers.c[CONTROLLER_1];
+        input_tick();
+
+        /* Allow the controller data one frame to properly work */
+        if (first_frame) {
+            first_frame = false;
+            continue;
+        }
 
         /* Gamestate frame tick calculations */
         switch (game_state) {
             case MAIN_MENU:
-                main_menu_tick(&game_state, gamepad);
+                main_menu_tick(&game_state);
                 break;
             case PRACTICE_TOOL:
-                practice_tool_tick(&game_state, gamepad);
+                practice_tool_tick(&game_state);
                 break;
             case ABOUT_SCREEN:
-                about_screen_tick(&game_state, gamepad);
+                about_screen_tick(&game_state);
                 break;
             case HELP_MENU:
-                help_menu_tick(&game_state, gamepad);
+                help_menu_tick(&game_state);
                 break;
         }
         

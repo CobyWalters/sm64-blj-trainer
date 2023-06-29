@@ -10,10 +10,11 @@
 #ifndef HELP_MENU_H
 #define HELP_MENU_H
 
+#include "../input.h"
 #include "../system.h"
 #include "../text.h"
 
-void help_menu_tick(game_state_t* game_state, const gamepad_state_t *const gamepad);
+void help_menu_tick(game_state_t* game_state);
 void help_menu_draw(void);
 
 #endif

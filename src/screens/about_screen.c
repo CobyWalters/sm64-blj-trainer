@@ -9,8 +9,8 @@
 
 #include "about_screen.h"
 
-void about_screen_tick(game_state_t* game_state, const gamepad_state_t *const gamepad) {
-    if (gamepad->B) {
+void about_screen_tick(game_state_t* game_state) {
+    if (b_press()) {
         *game_state = MAIN_MENU;
     }
 }

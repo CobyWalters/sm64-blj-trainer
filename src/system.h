@@ -16,15 +16,11 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include <libdragon.h>
+#include <limits.h>
 
 typedef int64_t ticks_t;
 
 #define TICKS_PER_MS ((ticks_t)(TICKS_PER_SECOND / 1000))
-
-#define CONTROLLER_1 0
-#define CONTROLLER_2 1
-#define CONTROLLER_3 2
-#define CONTROLLER_4 3
 
 #define COLOR_BLACK graphics_make_color(0,   0,   0,   255)
 #define COLOR_WHITE graphics_make_color(255, 255, 255, 255)

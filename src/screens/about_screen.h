@@ -10,10 +10,11 @@
 #ifndef ABOUT_SCREEN_H
 #define ABOUT_SCREEN_H
 
+#include "../input.h"
 #include "../system.h"
 #include "../text.h"
 
-void about_screen_tick(game_state_t* game_state, const gamepad_state_t *const gamepad);
+void about_screen_tick(game_state_t* game_state);
 void about_screen_draw(void);
 
 #endif
