@@ -2,7 +2,7 @@ V=1
 SOURCE_DIR=src
 BUILD_DIR=build
 include $(N64_INST)/include/n64.mk
-ROM_VERSION=1.0
+ROM_VERSION=1.1
 NAME=sm64-blj-trainer-$(ROM_VERSION)
 ROMNAME=$(NAME).z64
 FS=$(BUILD_DIR)/data.dfs
