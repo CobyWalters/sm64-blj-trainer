@@ -20,7 +20,5 @@ bool dpad_up();
 bool dpad_down();
 bool stick_up();
 bool stick_down();
-void input_draw();
-
 
 #endif

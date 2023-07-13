@@ -54,8 +54,6 @@ void practice_tool_draw() {
     /* Draw FPS*/
     fps_draw();
 
-    //input_draw();
-
     /* Draw frame counter */
     text_set_font(FONT_MEDIUM);
     char frame_text[10];
