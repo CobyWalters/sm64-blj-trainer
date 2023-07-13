@@ -62,6 +62,9 @@ int text_get_word_width(const char s[]) {
 /* Draws part of the text, as if the rest of the letters were invisible */
 void text_draw_partial(int x, int y, const char s[], enum TextAlign align, int start, int end) {
 
+    color_t text_color = gfx_get_color();
+    color_t shadow_color = gfx_blend_colors(text_color, 1, COLOR_BLACK, 2);
+
     int w = text_get_line_width(s);
     int align_offset = (align == ALIGN_LEFT ? 0 : (align == ALIGN_RIGHT? -w : -w/2));
     int x_offset = align_offset;
@@ -73,6 +76,16 @@ void text_draw_partial(int x, int y, const char s[], enum TextAlign align, int s
             y_offset += line_height;
             continue;
         } else if (s[i] != ' ' && i >= start) {
+
+            if (current_font == FONT_BOLD) {
+                /* Draw text shadow */
+                gfx_set_color(shadow_color);
+                graphics_draw_character(gfx->disp, x + x_offset, y + y_offset + 1, s[i]);
+                graphics_draw_character(gfx->disp, x + x_offset+1, y + y_offset + 1, s[i]);
+                gfx_set_color(text_color);
+            }
+
+            /* Draw text */
             graphics_draw_character(gfx->disp, x + x_offset, y + y_offset, s[i]);
         }
         x_offset += fonts[current_font].char_widths[(int) s[i]];
@@ -85,6 +98,9 @@ void text_draw(int x, int y, const char s[], enum TextAlign align) {
 }
 
 void text_draw_wordwrap(int x, int y, int w, const char s[]) {
+    
+    color_t text_color = gfx_get_color();
+    color_t shadow_color = gfx_blend_colors(text_color, 1, COLOR_BLACK, 2);
     
     int space_width = fonts[current_font].char_widths[(int) ' '];
     int x_offset = 0;
@@ -114,6 +130,15 @@ void text_draw_wordwrap(int x, int y, int w, const char s[]) {
             y_offset += line_height;
         }
 
+        if (current_font == FONT_BOLD) {
+            /* Draw text shadow */
+            gfx_set_color(shadow_color);
+            graphics_draw_character(gfx->disp, x + x_offset, y + y_offset + 1, s[i]);
+            graphics_draw_character(gfx->disp, x + x_offset+1, y + y_offset + 1, s[i]);
+            gfx_set_color(text_color);
+        }
+        
+        /* Draw text */
         graphics_draw_character(gfx->disp, x + x_offset, y + y_offset, s[i]);
         x_offset += char_width;
     }

@@ -49,7 +49,7 @@ int main(void) {
     /* Initialize game state */
     game_state_t game_state = MAIN_MENU;
 
-    bool first_frame = true;
+    controller_scan();
 
     /* Run the main loop */
     while (1) {
@@ -61,12 +61,6 @@ int main(void) {
         /* Update controller state */
         controller_scan();
         input_tick();
-
-        /* Allow the controller data one frame to properly work */
-        if (first_frame) {
-            first_frame = false;
-            continue;
-        }
 
         /* Gamestate frame tick calculations */
         switch (game_state) {
@@ -86,8 +80,8 @@ int main(void) {
         
         /* Grab a display buffer and start drawing */
         gfx_display_lock();
-        graphics_fill_screen(gfx->disp, COLOR_BLACK);
-        graphics_set_color(COLOR_WHITE, 0);
+        gfx_set_color(COLOR_WHITE);
+        graphics_fill_screen(gfx->disp, graphics_convert_color(COLOR_BLACK));
 
         switch (game_state) {
             case MAIN_MENU:

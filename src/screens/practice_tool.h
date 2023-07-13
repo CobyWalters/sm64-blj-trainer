@@ -12,6 +12,7 @@
 
 #include <string.h>
 #include "../fps.h"
+#include "../gfx.h"
 #include "../input.h"
 #include "../system.h"
 #include "../text.h"

@@ -22,11 +22,6 @@ typedef int64_t ticks_t;
 
 #define TICKS_PER_MS ((ticks_t)(TICKS_PER_SECOND / 1000))
 
-#define COLOR_BLACK graphics_make_color(0,   0,   0,   255)
-#define COLOR_WHITE graphics_make_color(255, 255, 255, 255)
-#define COLOR_RED   graphics_make_color(223, 104, 93,  255)
-#define COLOR_GREEN graphics_make_color(35,  176, 58,  255)
-
 typedef enum {
     MAIN_MENU,
     PRACTICE_TOOL,

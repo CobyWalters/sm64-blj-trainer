@@ -13,8 +13,7 @@ ticks_t last_frame_tick = 0;
 float average_fps = 0.0;
 
 bool fps_tick(void) {
-    
-    /* Check timing */
+    /* Check timing to return if tick is a new frame tick */
     const ticks_t current_tick = timer_ticks();
     if (current_tick >= last_frame_tick + FPS_TICKS_PER_FRAME) {
         average_fps = (float)(TICKS_PER_SECOND) / (current_tick - last_frame_tick);
@@ -26,9 +25,7 @@ bool fps_tick(void) {
 
 
 void fps_draw(void) {
-    graphics_set_color(COLOR_WHITE, 0);
     text_set_font(FONT_MEDIUM);
-
     static char fps_text[FPS_TEXT_LEN];
     const char *const fps_text_format = "FPS: %.2f";
     snprintf(fps_text, FPS_TEXT_LEN, fps_text_format, average_fps);

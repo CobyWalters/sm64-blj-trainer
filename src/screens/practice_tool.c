@@ -37,7 +37,7 @@ void practice_tool_tick(game_state_t* game_state) {
     if (!a_press()) {
         ++frame_gap;
     } else {
-        if (current_frame == 0 || frame_gap > 4) {
+        if (current_frame == 0 || frame_gap > 5) {
             /* Reset the timer if needed */
             for (int i = 0; i < 30; ++i) {
                 blj_frames[i] = false;
@@ -96,8 +96,9 @@ void practice_tool_draw() {
     if (!red_text_index) red_text_index = 63;
 
     /* Draw the blj frames */
-    graphics_set_color(COLOR_GREEN, 0);
+    text_set_font(FONT_BOLD);
+    gfx_set_color(COLOR_GREEN);
     text_draw_partial(gfx->width/2, gfx->height/2 - 5, blj_frame_text, ALIGN_CENTER, 0, red_text_index);
-    graphics_set_color(COLOR_RED, 0);
+    gfx_set_color(COLOR_RED);
     text_draw_partial(gfx->width/2, gfx->height/2 - 5, blj_frame_text, ALIGN_CENTER, red_text_index, 63);
 }
