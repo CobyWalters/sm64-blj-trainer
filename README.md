@@ -4,7 +4,7 @@
 **sm64 blj trainer** is a Nintendo 64 ROM for practicing consistent frame-perfect bljs in Super Mario 64. This ROM is a n64 port of xandrey's practice tool. The GUI is also heavily inspired by [wermi's controller test ROM (mimi)](https://github.com/wermipls/mimi)
 
 ## Download
-Latest version of the ROM can be found [here](https://github.com/CobyWalters/sm64-blj-trainer/releases).
+Latest version of the ROM can be found [here](https://github.com/rollercobester/sm64-blj-trainer/releases).
 
 ## Basic controls
 In the main menu:

@@ -63,7 +63,7 @@ void practice_tool_draw() {
     text_draw(32, 24, frame_text, ALIGN_LEFT);
     
     /* Draw repo url */
-    text_draw(gfx->width/2, 201, "github.com/CobyWalters/sm64-blj-trainer", ALIGN_CENTER);
+    text_draw(gfx->width/2, 201, "github.com/rollercobester/sm64-blj-trainer", ALIGN_CENTER);
 
     /* Draw starting text */
     if (current_frame == 0) {
