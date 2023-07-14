@@ -8,7 +8,7 @@ Latest version of the ROM can be found [here](https://github.com/rollercobester/
 
 ## Basic controls
 In the main menu:
-* D-Pad - select option
+* D-Pad or analog stick - select option
 * A - confirm selection
 
 On the about/help screen:
