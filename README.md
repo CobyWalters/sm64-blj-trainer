@@ -41,7 +41,7 @@ After that, the ROM should be possible to compile with just `libdragon make`.
 * xandrey - initial python code
 * coby - porting to n64
 
-Special thanks to xandrey, wermi, kolunio, GTM_, and GreenSuigi.
+Special thanks to xandrey, wermi, kolunio, GTM, and GreenSuigi.
 
 ### 3rd party assets
 * [Enter Command font by Font End Dev](https://fontenddev.com/fonts/enter-command/), licensed under CC BY 4.0
