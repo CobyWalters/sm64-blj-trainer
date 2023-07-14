@@ -25,7 +25,7 @@ If you would like to build the ROM yourself, you will need to have [libdragon](h
 
 Clone the repository (including submodules) and navigate to the directory:
 ```
-git clone --recurse-submodules https://github.com/CobyWalters/sm64-blj-trainer/
+git clone --recurse-submodules https://github.com/rollercobester/sm64-blj-trainer/
 cd sm64-blj-trainer
 ```
 
