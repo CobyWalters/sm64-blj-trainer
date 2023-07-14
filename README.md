@@ -21,7 +21,7 @@ On the practice tool screen:
 Additional informations on usage can be found in the help screen built into the ROM.
 
 ## Building
-To build the ROM, you will need to have [libdragon](https://libdragon.dev/) set up. 
+If you would like to build the ROM yourself, you will need to have [libdragon](https://libdragon.dev/) set up. 
 
 Clone the repository (including submodules) and navigate to the directory:
 ```
