@@ -9,7 +9,7 @@
 
 #include "sfx.h"
 
-#define SFX_SAMPLE_RATE 8192
+#define SFX_SAMPLE_RATE 16000
 #define SFX_NUM_BUFFERS 1
 #define SFX_MAX_BITS 8
 
@@ -28,7 +28,7 @@ void sfx_init(void) {
     /* Load the sound effects cache */
     for (size_t i = 0; i < SFX_ID_COUNT; i++) {
         wav64_open(&sfx_cache[i], sfx_files[i]);
-        mixer_ch_set_limits(i, 16, SFX_SAMPLE_RATE, 2048);
+        //mixer_ch_set_limits(i, 16, SFX_SAMPLE_RATE, 2048);
     }
 }
 
@@ -44,4 +44,12 @@ void sfx_buffer_sound_effects() {
         mixer_poll(buf, audio_get_buffer_length());
         audio_write_end();
     }
+}
+
+int16_t *read_dfs_raw_audio(const char *const file) {
+    int fp = dfs_open(file);
+    int16_t *raw_audio = malloc(dfs_size(fp));
+    dfs_read(raw_audio, 1, dfs_size(fp), fp);
+    dfs_close(fp);
+    return raw_audio;
 }

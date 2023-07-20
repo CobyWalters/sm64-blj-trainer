@@ -18,6 +18,7 @@
 #include "screens/help_menu.c"
 #include "screens/main_menu.c"
 #include "screens/practice_tool.c"
+#include "input.h"
 #include "fps.h"
 #include "gfx.h"
 #include "sfx.h"
@@ -31,6 +32,8 @@ void reset_handler(exception_t *ex) {
     display_close();
     abort();
 }
+
+int16_t *sfx;
 
 int main(void) {
 
@@ -53,19 +56,24 @@ int main(void) {
 
     /* Initial scan to avoid garbage input */
     controller_scan();
+    int16_t* sfx = (int16_t*)read_dfs_raw_audio("click2.raw");
 
     /* Run the main loop */
     while (1) {
 
         sfx_buffer_sound_effects();
 
+        /* FPS control */
+        bool new_frame = fps_tick();
+        if (!new_frame) continue;
+
         /* Update controller state */
         controller_scan();
         input_tick();
 
-        /* FPS control */
-        bool new_frame = fps_tick();
-        if (!new_frame) continue;
+        if (a_press()) {
+            audio_write(sfx);
+        }
 
         /* Gamestate frame tick calculations */
         switch (game_state) {

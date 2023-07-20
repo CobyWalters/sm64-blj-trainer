@@ -21,5 +21,6 @@ typedef enum {
 void sfx_init(void);
 void sfx_play(sfx_id_t sfx_id);
 void sfx_buffer_sound_effects(void);
+int16_t *read_dfs_raw_audio(const char *const file);
 
 #endif

@@ -8,14 +8,13 @@
  */
 
 #include "input.h"
-#include "text.h"
 
 controllers_state_t pressed_keys;
 controllers_state_t held_keys;
 int stick_up_frames[4];
 int stick_down_frames[4];
 
-void input_tick(void) {
+void input_tick() {
     pressed_keys = get_keys_down();
     held_keys = get_keys_held();
     for (int i = 0; i < 4; ++i) {
@@ -26,8 +25,8 @@ void input_tick(void) {
 
 bool a_press() {
     for (int i = 0; i < 4; ++i) {
-        if (held_keys.c[i].A) {
-            sfx_play(SFX_CLICK);
+        if (pressed_keys.c[i].A) {
+            //sfx_play(SFX_CLICK);
             return true;
         }
     }
@@ -36,21 +35,21 @@ bool a_press() {
 
 bool b_press() {
     for (int i = 0; i < 4; ++i)
-        if (held_keys.c[i].B)
+        if (pressed_keys.c[i].B)
             return true;
     return false;
 }
 
 bool dpad_up() {
     for (int i = 0; i < 4; ++i)
-        if (held_keys.c[i].up)
+        if (pressed_keys.c[i].up)
             return true;
     return false;
 }
 
 bool dpad_down() {
     for (int i = 0; i < 4; ++i)
-        if (held_keys.c[i].down)
+        if (pressed_keys.c[i].down)
             return true;
     return false;
 }
