@@ -20,6 +20,7 @@
 #include "screens/practice_tool.c"
 #include "fps.h"
 #include "gfx.h"
+#include "sfx.h"
 #include "system.h"
 
 void reset_handler(exception_t *ex) {
@@ -41,6 +42,7 @@ int main(void) {
     /* Initialize game subsystems */
     gfx_init(RESOLUTION_320x240, DEPTH_32_BPP, BUFFERING_DOUBLE, GAMMA_NONE,
         ANTIALIAS_RESAMPLE);
+    sfx_init();
     text_init();
 
     console_set_debug(true);
@@ -49,18 +51,21 @@ int main(void) {
     /* Initialize game state */
     game_state_t game_state = MAIN_MENU;
 
+    /* Initial scan to avoid garbage input */
     controller_scan();
 
     /* Run the main loop */
     while (1) {
 
-        /* FPS control */
-        bool new_frame = fps_tick();
-        if (!new_frame) continue;
+        sfx_buffer_sound_effects();
 
         /* Update controller state */
         controller_scan();
         input_tick();
+
+        /* FPS control */
+        bool new_frame = fps_tick();
+        if (!new_frame) continue;
 
         /* Gamestate frame tick calculations */
         switch (game_state) {
@@ -77,12 +82,11 @@ int main(void) {
                 help_menu_tick(&game_state);
                 break;
         }
-        
+
         /* Grab a display buffer and start drawing */
         gfx_display_lock();
         gfx_set_color(COLOR_WHITE);
         graphics_fill_screen(gfx->disp, graphics_convert_color(COLOR_BLACK));
-
         switch (game_state) {
             case MAIN_MENU:
                 main_menu_draw();

@@ -25,43 +25,46 @@ void input_tick(void) {
 }
 
 bool a_press() {
-    for (int i = 0; i < 4; ++i)
-        if (pressed_keys.c[i].A)
+    for (int i = 0; i < 4; ++i) {
+        if (held_keys.c[i].A) {
+            sfx_play(SFX_CLICK);
             return true;
+        }
+    }
     return false;
 }
 
 bool b_press() {
     for (int i = 0; i < 4; ++i)
-        if (pressed_keys.c[i].B)
+        if (held_keys.c[i].B)
             return true;
     return false;
 }
 
 bool dpad_up() {
     for (int i = 0; i < 4; ++i)
-        if (pressed_keys.c[i].up)
+        if (held_keys.c[i].up)
             return true;
     return false;
 }
 
 bool dpad_down() {
     for (int i = 0; i < 4; ++i)
-        if (pressed_keys.c[i].down)
+        if (held_keys.c[i].down)
             return true;
     return false;
 }
 
 bool stick_up() {
     for (int i = 0; i < 4; ++i)
-        if (stick_up_frames[i] == 1 || (stick_up_frames[i] > 10 && stick_up_frames[i] % 4 == 0))
+        if (stick_up_frames[i] == 1 || (stick_up_frames[i] > 10 && stick_up_frames[i] % 4 == 1))
             return true;
     return false;
 }
 
 bool stick_down() {
     for (int i = 0; i < 4; ++i)
-        if (stick_down_frames[i] == 1 || (stick_down_frames[i] > 10 && stick_down_frames[i] % 4 == 0))
+        if (stick_down_frames[i] == 1 || (stick_down_frames[i] > 10 && stick_down_frames[i] % 4 == 1))
             return true;
     return false;
 }

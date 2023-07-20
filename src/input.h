@@ -12,6 +12,7 @@
 
 #include <libdragon.h>
 #include "system.h"
+#include "sfx.h"
 
 void input_tick();
 bool a_press();
