@@ -56,12 +56,13 @@ int main(void) {
 
     /* Initial scan to avoid garbage input */
     controller_scan();
-    int16_t* sfx = (int16_t*)read_dfs_raw_audio("click2.raw");
+
+    int16_t* sfx = (int16_t*)read_dfs_raw_audio("sfx/click2.raw");
 
     /* Run the main loop */
     while (1) {
 
-        sfx_buffer_sound_effects();
+        //sfx_buffer_sound_effects();
 
         /* FPS control */
         bool new_frame = fps_tick();

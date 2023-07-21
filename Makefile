@@ -9,6 +9,7 @@ ROMNAME       := $(NAME).z64
 
 # Project directories
 RES_DIR       := resources
+FS_DIR		  := $(BUILD_DIR)/fs
 DFS_FILE	  := $(BUILD_DIR)/data.dfs
 
 all: $(ROMNAME)
@@ -20,25 +21,56 @@ build/main.o: .FORCE
 $(ROMNAME): N64_ROM_TITLE="sm64 blj trainer"
 $(ROMNAME): $(DFS_FILE)
 
-# File conversions
-WAV_DIR := $(RES_DIR)/sfx
-WAV_FILES := $(wildcard $(WAV_DIR)/*.wav)
-WAV64_FILES := $(WAV_FILES:.wav=.wav64)
-RAW_FILES := $(wildcard $(WAV_DIR)/*.raw)
+# Create a directory for files that will go into the DFS
+$(shell mkdir -p $(FS_DIR))
 
-$(WAV64_FILES): $(WAV_DIR)/%.wav64: $(WAV_DIR)/%.wav
-	$(N64_AUDIOCONV) -o $(WAV_DIR) $<
+# ----------------- File conversions -----------------
+#.all: sox
+#WAV_FILES := $(shell find $(RES_DIR) -type f -name '*.wav')
+#FS_WAV_FILES := $(patsubst $(RES_DIR)/%, $(FS_DIR)/%, $(WAV_FILES))
+#$(FS_WAV_FILES): $(FS_DIR)/% : $(RES_DIR)/%
+#	@mkdir -p $(@D)
+#	@echo eeee - sox $< -b16 -c2 $@
+#	sox $< -b16 -c2 $@
+
+#WAV_64FILES  := $(WAV_FILES:$(RES_DIR)/%.wav=$(FS_DIR)/%.wav64)
+
+# TODO: Convert .wav files to 16 bit stereo
+#$(FS_DIR)/%.wav: $(RES_DIR)/%.wav   
+#	sox $< -b16 -c2 $@
+
+# Convert .wav files to .wav64 files
+#$(FS_DIR)/%.wav64: $(RES_DIR)/%.wav $(N64_AUDIOCONV)
+#	$(N64_AUDIOCONV) -o $(FS_DIR) $<
+
+# TODO: Convert .wav files into raw files?
+
+# -------------------- File copy --------------------
+
+RAW_FILES := $(shell find $(RES_DIR) -type f -name '*.raw')
+FS_RAW_FILES := $(patsubst $(RES_DIR)/%, $(FS_DIR)/%, $(RAW_FILES))
+$(FS_RAW_FILES): $(FS_DIR)/% : $(RES_DIR)/%
+	@mkdir -p $(@D)
+	cp $< $@
+
+SPRITE_FILES := $(shell find $(RES_DIR) -type f -name '*.sprite')
+FS_SPRITE_FILES := $(patsubst $(RES_DIR)/%, $(FS_DIR)/%, $(SPRITE_FILES))
+$(FS_SPRITE_FILES): $(FS_DIR)/% : $(RES_DIR)/%
+	@mkdir -p $(@D)
+	cp $< $@
+
+BIN_FILES := $(shell find $(RES_DIR) -type f -name '*.bin')
+FS_BIN_FILES := $(patsubst $(RES_DIR)/%, $(FS_DIR)/%, $(BIN_FILES))
+$(FS_BIN_FILES): $(FS_DIR)/% : $(RES_DIR)/%
+	@mkdir -p $(@D)
+	cp $< $@
 
 # Move resources to DFS
-$(DFS_FILE): $(RAW_FILES)
-	$(N64_MKDFS) $@ resources
+$(DFS_FILE): $(FS_RAW_FILES) $(FS_SPRITE_FILES) $(FS_BIN_FILES)
+	$(N64_MKDFS) $@ $(FS_DIR)
 
 SRCS := $(wildcard $(SOURCE_DIR)/*.c)
 OBJS := $(SRCS:$(SOURCE_DIR)/%.c=$(BUILD_DIR)/%.o)
 $(BUILD_DIR)/$(NAME).elf: $(OBJS)
-
-clean:
-	rm -f $(BUILD_DIR)/* *.z64
-.PHONY: clean
 
 -include $(wildcard $(BUILD_DIR)/*.d)
