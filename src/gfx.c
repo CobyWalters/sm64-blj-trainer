@@ -11,8 +11,7 @@
 
 gfx_t *gfx;
 
-void gfx_init(resolution_t res, bitdepth_t depth, buffer_mode_t num_buffers,
-    gamma_t gamma, antialias_t aa) {
+void gfx_init(resolution_t res, bitdepth_t depth, buffer_mode_t num_buffers, gamma_t gamma, antialias_t aa) {
     display_init(res, depth, num_buffers, gamma, aa);
     gfx = malloc(sizeof(gfx_t));
     gfx->res = res;
@@ -45,8 +44,7 @@ color_t gfx_make_color(int r, int g, int b, int a) {
     return color;
 }
 
-color_t gfx_blend_colors(color_t color_1, int color_1_weight, color_t color_2,
-    int color_2_weight) {
+color_t gfx_blend_colors(color_t color_1, int color_1_weight, color_t color_2, int color_2_weight) {
     color_t color;
     color.r = (color_1.r * color_1_weight + color_2.r * color_2_weight) /
                 (color_1_weight + color_2_weight);
@@ -62,7 +60,10 @@ color_t gfx_blend_colors(color_t color_1, int color_1_weight, color_t color_2,
 void gfx_display_lock(void) {
     /* Grab a render buffer */
     static display_context_t disp = 0;
-    while (!(disp = display_lock())) { /* Spinlock! */ }
+    while (!(disp = display_lock())) {
+        /* Spinlock! */
+        //lowlatency_poll();
+    }
     gfx->disp = disp;
 }
 

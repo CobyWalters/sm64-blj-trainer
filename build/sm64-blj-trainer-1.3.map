@@ -1147,13 +1147,19 @@ Discarded input sections
  .MIPS.abiflags
                 0x00000000       0x18 build/fps.o
  .pdr           0x00000000       0x40 build/fps.o
+ .rodata.fps_draw.str1.8
+                0x00000000        0xa build/fps.o
+ .text.fps_draw
+                0x00000000       0x60 build/fps.o
+ .bss.fps_text.0
+                0x00000000        0xb build/fps.o
  .text          0x00000000        0x0 build/main.o
  .data          0x00000000        0x0 build/main.o
  .bss           0x00000000        0x0 build/main.o
  .reginfo       0x00000000       0x18 build/main.o
  .MIPS.abiflags
                 0x00000000       0x18 build/main.o
- .pdr           0x00000000      0x160 build/main.o
+ .pdr           0x00000000      0x1a0 build/main.o
  .text.about_screen_tick
                 0x00000000       0x40 build/main.o
  .text.about_screen_draw
@@ -1162,6 +1168,10 @@ Discarded input sections
                 0x00000000       0x40 build/main.o
  .text.help_menu_draw
                 0x00000000       0x60 build/main.o
+ .text.is_blj_frame
+                0x00000000       0x60 build/main.o
+ .text.practice_tool_tick
+                0x00000000       0x40 build/main.o
  .sbss.sfx      0x00000000        0x4 build/main.o
  .text          0x00000000        0x0 build/gfx.o
  .data          0x00000000        0x0 build/gfx.o
@@ -1176,7 +1186,7 @@ Discarded input sections
  .reginfo       0x00000000       0x18 build/input.o
  .MIPS.abiflags
                 0x00000000       0x18 build/input.o
- .pdr           0x00000000       0xe0 build/input.o
+ .pdr           0x00000000      0x140 build/input.o
  .text          0x00000000        0x0 build/sfx.o
  .data          0x00000000        0x0 build/sfx.o
  .bss           0x00000000        0x0 build/sfx.o
@@ -1184,10 +1194,6 @@ Discarded input sections
  .MIPS.abiflags
                 0x00000000       0x18 build/sfx.o
  .pdr           0x00000000       0x80 build/sfx.o
- .text.sfx_play
-                0x00000000       0x20 build/sfx.o
- .text.sfx_buffer_sound_effects
-                0x00000000       0x20 build/sfx.o
  .text          0x00000000        0x0 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(dragonfs.o)
  .data          0x00000000        0x0 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(dragonfs.o)
  .bss           0x00000000        0x0 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(dragonfs.o)
@@ -1217,17 +1223,11 @@ Discarded input sections
                 0x00000000       0xc0 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(audio.o)
  .text.audio_pause
                 0x00000000       0xa0 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(audio.o)
- .text.audio_write_begin
-                0x00000000      0x100 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(audio.o)
- .text.audio_write_end
-                0x00000000       0x80 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(audio.o)
- .text.audio_write_silence
+ .text.audio_write
                 0x00000000      0x180 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(audio.o)
  .text.audio_can_write
                 0x00000000       0x40 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(audio.o)
  .text.audio_get_frequency
-                0x00000000       0x20 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(audio.o)
- .text.audio_get_buffer_length
                 0x00000000       0x20 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(audio.o)
  .sbss._orig_fill_buffer_callback
                 0x00000000        0x4 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(audio.o)
@@ -2230,7 +2230,7 @@ LOAD /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdrag
                 0x80000000                        __kseg0_start = 0x80000000
                 0x80000400                        __libdragon_text_start = (__kseg0_start + 0x400)
 
-.text           0x80000400    0x194f0
+.text           0x80000400    0x199b0
  *(.boot)
  .boot          0x80000400      0x18c /n64_toolchain/mips64-elf/lib/libdragon.a(entrypoint.o)
                 0x80000400                _start
@@ -2766,158 +2766,176 @@ LOAD /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdrag
  .text.fps_tick
                 0x80016d80       0xa0 build/fps.o
                 0x80016d80                fps_tick
- .text.fps_draw
-                0x80016e20       0x60 build/fps.o
-                0x80016e20                fps_draw
  .text.reset_handler
-                0x80016e80       0x40 build/main.o
-                0x80016e80                reset_handler
+                0x80016e20       0x40 build/main.o
+                0x80016e20                reset_handler
+ .text.practice_tool_tick.part.0
+                0x80016e60      0x160 build/main.o
  .text.main_menu_tick
-                0x80016ec0      0x160 build/main.o
-                0x80016ec0                main_menu_tick
+                0x80016fc0      0x160 build/main.o
+                0x80016fc0                main_menu_tick
  .text.main_menu_draw
-                0x80017020       0xc0 build/main.o
-                0x80017020                main_menu_draw
+                0x80017120       0xc0 build/main.o
+                0x80017120                main_menu_draw
  .text.get_first_bad_input_frame
-                0x800170e0       0xa0 build/main.o
-                0x800170e0                get_first_bad_input_frame
- .text.practice_tool_tick
-                0x80017180       0xe0 build/main.o
-                0x80017180                practice_tool_tick
+                0x800171e0       0x80 build/main.o
+                0x800171e0                get_first_bad_input_frame
  .text.practice_tool_draw
-                0x80017260      0x260 build/main.o
+                0x80017260      0x400 build/main.o
                 0x80017260                practice_tool_draw
  .text.startup.main
-                0x800174c0      0x300 build/main.o
-                0x800174c0                main
+                0x80017660      0x2c0 build/main.o
+                0x80017660                main
  .text.gfx_init
-                0x800177c0       0xa0 build/gfx.o
-                0x800177c0                gfx_init
+                0x80017920       0xa0 build/gfx.o
+                0x80017920                gfx_init
  .text.gfx_set_color
-                0x80017860       0x40 build/gfx.o
-                0x80017860                gfx_set_color
+                0x800179c0       0x40 build/gfx.o
+                0x800179c0                gfx_set_color
  .text.gfx_get_color
-                0x800178a0       0x40 build/gfx.o
-                0x800178a0                gfx_get_color
+                0x80017a00       0x40 build/gfx.o
+                0x80017a00                gfx_get_color
  .text.gfx_make_color
-                0x800178e0       0x20 build/gfx.o
-                0x800178e0                gfx_make_color
+                0x80017a40       0x20 build/gfx.o
+                0x80017a40                gfx_make_color
  .text.gfx_blend_colors
-                0x80017900      0x120 build/gfx.o
-                0x80017900                gfx_blend_colors
+                0x80017a60      0x120 build/gfx.o
+                0x80017a60                gfx_blend_colors
  .text.gfx_display_lock
-                0x80017a20       0x40 build/gfx.o
-                0x80017a20                gfx_display_lock
+                0x80017b80       0x40 build/gfx.o
+                0x80017b80                gfx_display_lock
  .text.gfx_display_flip
-                0x80017a60       0x40 build/gfx.o
-                0x80017a60                gfx_display_flip
+                0x80017bc0       0x40 build/gfx.o
+                0x80017bc0                gfx_display_flip
  .text.read_dfs_sprite
-                0x80017aa0       0x80 build/gfx.o
-                0x80017aa0                read_dfs_sprite
+                0x80017c00       0x80 build/gfx.o
+                0x80017c00                read_dfs_sprite
  .text.input_tick
-                0x80017b20      0x160 build/input.o
-                0x80017b20                input_tick
- .text.a_press  0x80017c80       0x40 build/input.o
-                0x80017c80                a_press
- .text.b_press  0x80017cc0       0x40 build/input.o
-                0x80017cc0                b_press
- .text.dpad_up  0x80017d00       0x40 build/input.o
-                0x80017d00                dpad_up
+                0x80017c80      0x160 build/input.o
+                0x80017c80                input_tick
+ .text.a_press  0x80017de0       0x40 build/input.o
+                0x80017de0                a_press
+ .text.b_press  0x80017e20       0x40 build/input.o
+                0x80017e20                b_press
+ .text.l_press  0x80017e60       0x40 build/input.o
+                0x80017e60                l_press
+ .text.r_press  0x80017ea0       0x40 build/input.o
+                0x80017ea0                r_press
+ .text.start_press
+                0x80017ee0       0x40 build/input.o
+                0x80017ee0                start_press
+ .text.dpad_up  0x80017f20       0x40 build/input.o
+                0x80017f20                dpad_up
  .text.dpad_down
-                0x80017d40       0x40 build/input.o
-                0x80017d40                dpad_down
+                0x80017f60       0x40 build/input.o
+                0x80017f60                dpad_down
  .text.stick_up
-                0x80017d80       0x60 build/input.o
-                0x80017d80                stick_up
+                0x80017fa0       0x60 build/input.o
+                0x80017fa0                stick_up
  .text.stick_down
-                0x80017de0       0x60 build/input.o
-                0x80017de0                stick_down
- .text.sfx_init
-                0x80017e40       0x20 build/sfx.o
-                0x80017e40                sfx_init
+                0x80018000       0x60 build/input.o
+                0x80018000                stick_down
+ .text.sfx_play
+                0x80018060       0xa0 build/sfx.o
+                0x80018060                sfx_play
+ .text.sfx_toggle_audio
+                0x80018100       0x20 build/sfx.o
+                0x80018100                sfx_toggle_audio
  .text.read_dfs_raw_audio
-                0x80017e60       0x80 build/sfx.o
-                0x80017e60                read_dfs_raw_audio
+                0x80018120       0x80 build/sfx.o
+                0x80018120                read_dfs_raw_audio
+ .text.sfx_init
+                0x800181a0       0x60 build/sfx.o
+                0x800181a0                sfx_init
  .text.get_next_token
-                0x80017ee0       0xc0 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(dragonfs.o)
+                0x80018200       0xc0 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(dragonfs.o)
  .text.recurse_path
-                0x80017fa0      0x3c0 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(dragonfs.o)
- .text.__close  0x80018360       0x80 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(dragonfs.o)
- .text.__fstat  0x800183e0       0xa0 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(dragonfs.o)
+                0x800182c0      0x3c0 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(dragonfs.o)
+ .text.__close  0x80018680       0x80 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(dragonfs.o)
+ .text.__fstat  0x80018700       0xa0 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(dragonfs.o)
  .text.dfs_dir_findfirst
-                0x80018480       0xc0 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(dragonfs.o)
-                0x80018480                dfs_dir_findfirst
+                0x800187a0       0xc0 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(dragonfs.o)
+                0x800187a0                dfs_dir_findfirst
  .text.__findfirst
-                0x80018540       0x80 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(dragonfs.o)
+                0x80018860       0x80 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(dragonfs.o)
  .text.dfs_dir_findnext
-                0x800185c0       0xc0 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(dragonfs.o)
-                0x800185c0                dfs_dir_findnext
+                0x800188e0       0xc0 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(dragonfs.o)
+                0x800188e0                dfs_dir_findnext
  .text.__findnext
-                0x80018680       0x80 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(dragonfs.o)
+                0x800189a0       0x80 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(dragonfs.o)
  .text.dfs_open
-                0x80018700      0x120 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(dragonfs.o)
-                0x80018700                dfs_open
- .text.__open   0x80018820       0x60 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(dragonfs.o)
+                0x80018a20      0x120 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(dragonfs.o)
+                0x80018a20                dfs_open
+ .text.__open   0x80018b40       0x60 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(dragonfs.o)
  .text.dfs_close
-                0x80018880       0x80 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(dragonfs.o)
-                0x80018880                dfs_close
+                0x80018ba0       0x80 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(dragonfs.o)
+                0x80018ba0                dfs_close
  .text.dfs_seek
-                0x80018900      0x100 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(dragonfs.o)
-                0x80018900                dfs_seek
- .text.__lseek  0x80018a00       0x80 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(dragonfs.o)
+                0x80018c20      0x100 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(dragonfs.o)
+                0x80018c20                dfs_seek
+ .text.__lseek  0x80018d20       0x80 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(dragonfs.o)
  .text.dfs_read
-                0x80018a80      0x280 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(dragonfs.o)
-                0x80018a80                dfs_read
- .text.__read   0x80018d00       0x20 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(dragonfs.o)
+                0x80018da0      0x280 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(dragonfs.o)
+                0x80018da0                dfs_read
+ .text.__read   0x80019020       0x20 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(dragonfs.o)
  .text.dfs_size
-                0x80018d20       0x60 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(dragonfs.o)
-                0x80018d20                dfs_size
+                0x80019040       0x60 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(dragonfs.o)
+                0x80019040                dfs_size
  .text.dfs_init
-                0x80018d80      0x1e0 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(dragonfs.o)
-                0x80018d80                dfs_init
+                0x800190a0      0x1e0 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(dragonfs.o)
+                0x800190a0                dfs_init
  .text.audio_callback.part.0
-                0x80018f60      0x1e0 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(audio.o)
+                0x80019280      0x1e0 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(audio.o)
  .text.audio_callback
-                0x80019140       0x60 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(audio.o)
+                0x80019460       0x60 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(audio.o)
  .text.audio_init
-                0x800191a0      0x200 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(audio.o)
-                0x800191a0                audio_init
- .text.audio_write
-                0x800193a0      0x180 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(audio.o)
-                0x800193a0                audio_write
+                0x800194c0      0x200 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(audio.o)
+                0x800194c0                audio_init
+ .text.audio_write_begin
+                0x800196c0      0x100 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(audio.o)
+                0x800196c0                audio_write_begin
+ .text.audio_write_end
+                0x800197c0       0x80 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(audio.o)
+                0x800197c0                audio_write_end
+ .text.audio_write_silence
+                0x80019840      0x180 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(audio.o)
+                0x80019840                audio_write_silence
+ .text.audio_get_buffer_length
+                0x800199c0       0x20 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(audio.o)
+                0x800199c0                audio_get_buffer_length
  .text.console_set_debug
-                0x80019520       0x20 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(console.o)
-                0x80019520                console_set_debug
+                0x800199e0       0x20 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(console.o)
+                0x800199e0                console_set_debug
  .text.timer_update_compare
-                0x80019540       0x40 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(timer.o)
+                0x80019a00       0x40 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(timer.o)
  .text.timer_overflow_callback
-                0x80019580       0x20 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(timer.o)
+                0x80019a40       0x20 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(timer.o)
  .text.timer_poll
-                0x800195a0      0x1c0 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(timer.o)
+                0x80019a60      0x1c0 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(timer.o)
  .text.timer_init
-                0x80019760       0xc0 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(timer.o)
-                0x80019760                timer_init
+                0x80019c20       0xc0 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(timer.o)
+                0x80019c20                timer_init
  .text.timer_ticks
-                0x80019820       0xc0 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(timer.o)
-                0x80019820                timer_ticks
+                0x80019ce0       0xc0 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(timer.o)
+                0x80019ce0                timer_ticks
  *(.init)
- .init          0x800198e0        0x8 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/crti.o
-                0x800198e0                _init
+ .init          0x80019da0        0x8 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/crti.o
+                0x80019da0                _init
  *(.fini)
- .fini          0x800198e8        0x8 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/crti.o
-                0x800198e8                _fini
+ .fini          0x80019da8        0x8 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/crti.o
+                0x80019da8                _fini
  *(.gnu.linkonce.t.*)
-                0x800198f0                        . = ALIGN (0x10)
-                0x800198f0                        __text_end = .
+                0x80019db0                        . = ALIGN (0x10)
+                0x80019db0                        __text_end = .
 
 .eh_frame_hdr
  *(.eh_frame_hdr)
 
-.eh_frame       0x800198f0        0x4
-                0x800198f0                        __EH_FRAME_BEGIN__ = .
+.eh_frame       0x80019db0        0x4
+                0x80019db0                        __EH_FRAME_BEGIN__ = .
  *(.eh_frame)
- .eh_frame      0x800198f0        0x0 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/crtbegin.o
- .eh_frame      0x800198f0        0x4 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/crtend.o
+ .eh_frame      0x80019db0        0x0 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/crtbegin.o
+ .eh_frame      0x80019db0        0x4 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/crtend.o
 
 .gcc_except_table
  *(.gcc_except_table*)
@@ -2925,659 +2943,665 @@ LOAD /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdrag
 .jcr
  *(.jcr)
 
-.rodata         0x800198f8     0xf420
+.rodata         0x80019db8     0xf450
  *(.rdata)
  *(.rodata)
- .rodata        0x800198f8      0x188 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libc.a(libc_a-svfprintf.o)
- .rodata        0x80019a80      0x188 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libc.a(libc_a-vfprintf.o)
- .rodata        0x80019c08      0x188 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libc.a(libc_a-vfiprintf.o)
- .rodata        0x80019d90      0x128 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libc.a(libc_a-mprec.o)
-                0x80019da0                __mprec_tinytens
-                0x80019dc8                __mprec_bigtens
-                0x80019df0                __mprec_tens
- .rodata        0x80019eb8      0x288 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libc.a(libc_a-ctype_.o)
-                0x80019eb8                _ctype_
-                0x80019fc0                _ctype_b
- .rodata        0x8001a140      0x188 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libc.a(libc_a-svfiprintf.o)
+ .rodata        0x80019db8      0x188 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libc.a(libc_a-svfprintf.o)
+ .rodata        0x80019f40      0x188 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libc.a(libc_a-vfprintf.o)
+ .rodata        0x8001a0c8      0x188 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libc.a(libc_a-vfiprintf.o)
+ .rodata        0x8001a250      0x128 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libc.a(libc_a-mprec.o)
+                0x8001a260                __mprec_tinytens
+                0x8001a288                __mprec_bigtens
+                0x8001a2b0                __mprec_tens
+ .rodata        0x8001a378      0x288 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libc.a(libc_a-ctype_.o)
+                0x8001a378                _ctype_
+                0x8001a480                _ctype_b
+ .rodata        0x8001a600      0x188 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libc.a(libc_a-svfiprintf.o)
  *(.rodata.*)
  .rodata.cb.0.str1.8
-                0x8001a2c8       0x1d /n64_toolchain/mips64-elf/lib/libdragon.a(debug.o)
- *fill*         0x8001a2e5        0x3 
+                0x8001a788       0x1d /n64_toolchain/mips64-elf/lib/libdragon.a(debug.o)
+ *fill*         0x8001a7a5        0x3 
  .rodata.debug_assert_func_f.str1.8
-                0x8001a2e8       0x3d /n64_toolchain/mips64-elf/lib/libdragon.a(debug.o)
+                0x8001a7a8       0x3d /n64_toolchain/mips64-elf/lib/libdragon.a(debug.o)
                                  0x45 (size before relaxing)
- *fill*         0x8001a325        0x3 
+ *fill*         0x8001a7e5        0x3 
  .rodata.__debug_backtrace.str1.8
-                0x8001a328        0xc /n64_toolchain/mips64-elf/lib/libdragon.a(debug.o)
- *fill*         0x8001a334        0x4 
+                0x8001a7e8        0xc /n64_toolchain/mips64-elf/lib/libdragon.a(debug.o)
+ *fill*         0x8001a7f4        0x4 
  .rodata.cb.2.str1.8
-                0x8001a338       0x1a /n64_toolchain/mips64-elf/lib/libdragon.a(inspector.o)
+                0x8001a7f8       0x1a /n64_toolchain/mips64-elf/lib/libdragon.a(inspector.o)
                                  0x22 (size before relaxing)
- *fill*         0x8001a352        0x6 
+ *fill*         0x8001a812        0x6 
  .rodata.cb.1.str1.8
-                0x8001a358        0xc /n64_toolchain/mips64-elf/lib/libdragon.a(inspector.o)
- *fill*         0x8001a364        0x4 
+                0x8001a818        0xc /n64_toolchain/mips64-elf/lib/libdragon.a(inspector.o)
+ *fill*         0x8001a824        0x4 
  .rodata.cb.0.str1.8
-                0x8001a368        0x7 /n64_toolchain/mips64-elf/lib/libdragon.a(inspector.o)
+                0x8001a828        0x7 /n64_toolchain/mips64-elf/lib/libdragon.a(inspector.o)
                                  0x27 (size before relaxing)
- *fill*         0x8001a36f        0x1 
+ *fill*         0x8001a82f        0x1 
  .rodata.cb.3.str1.8
-                0x8001a370       0x2a /n64_toolchain/mips64-elf/lib/libdragon.a(inspector.o)
- *fill*         0x8001a39a        0x2 
+                0x8001a830       0x2a /n64_toolchain/mips64-elf/lib/libdragon.a(inspector.o)
+ *fill*         0x8001a85a        0x2 
  .rodata.inspector_stdout
-                0x8001a39c       0x54 /n64_toolchain/mips64-elf/lib/libdragon.a(inspector.o)
+                0x8001a85c       0x54 /n64_toolchain/mips64-elf/lib/libdragon.a(inspector.o)
  .rodata.mips_disasm.str1.8
-                0x8001a3f0      0x1a6 /n64_toolchain/mips64-elf/lib/libdragon.a(inspector.o)
+                0x8001a8b0      0x1a6 /n64_toolchain/mips64-elf/lib/libdragon.a(inspector.o)
                                 0x1b6 (size before relaxing)
- *fill*         0x8001a596        0x2 
+ *fill*         0x8001aa56        0x2 
  .rodata.mips_disasm
-                0x8001a598       0xb0 /n64_toolchain/mips64-elf/lib/libdragon.a(inspector.o)
+                0x8001aa58       0xb0 /n64_toolchain/mips64-elf/lib/libdragon.a(inspector.o)
  .rodata.inspector.str1.8
-                0x8001a648      0x1fc /n64_toolchain/mips64-elf/lib/libdragon.a(inspector.o)
+                0x8001ab08      0x1fc /n64_toolchain/mips64-elf/lib/libdragon.a(inspector.o)
                                 0x20c (size before relaxing)
- *fill*         0x8001a844        0x4 
+ *fill*         0x8001ad04        0x4 
  .rodata.str1.8
-                0x8001a848      0x5e3 /n64_toolchain/mips64-elf/lib/libdragon.a(inspector.o)
- *fill*         0x8001ae2b        0x5 
+                0x8001ad08      0x5e3 /n64_toolchain/mips64-elf/lib/libdragon.a(inspector.o)
+ *fill*         0x8001b2eb        0x5 
  .rodata.fpu_ops.7
-                0x8001ae30      0x100 /n64_toolchain/mips64-elf/lib/libdragon.a(inspector.o)
+                0x8001b2f0      0x100 /n64_toolchain/mips64-elf/lib/libdragon.a(inspector.o)
  .rodata.special.8
-                0x8001af30      0x100 /n64_toolchain/mips64-elf/lib/libdragon.a(inspector.o)
- .rodata.ops.9  0x8001b030      0x100 /n64_toolchain/mips64-elf/lib/libdragon.a(inspector.o)
+                0x8001b3f0      0x100 /n64_toolchain/mips64-elf/lib/libdragon.a(inspector.o)
+ .rodata.ops.9  0x8001b4f0      0x100 /n64_toolchain/mips64-elf/lib/libdragon.a(inspector.o)
  .rodata.RESOLUTION_640x240
-                0x8001b130        0xc /n64_toolchain/mips64-elf/lib/libdragon.a(inspector.o)
- *fill*         0x8001b13c        0x4 
+                0x8001b5f0        0xc /n64_toolchain/mips64-elf/lib/libdragon.a(inspector.o)
+ *fill*         0x8001b5fc        0x4 
  .rodata.dma_write_raw_async.part.0.str1.8
-                0x8001b140       0x12 /n64_toolchain/mips64-elf/lib/libdragon.a(dma.o)
- *fill*         0x8001b152        0x6 
+                0x8001b600       0x12 /n64_toolchain/mips64-elf/lib/libdragon.a(dma.o)
+ *fill*         0x8001b612        0x6 
  .rodata.dma_read_async.str1.8
-                0x8001b158       0x8d /n64_toolchain/mips64-elf/lib/libdragon.a(dma.o)
- *fill*         0x8001b1e5        0x3 
+                0x8001b618       0x8d /n64_toolchain/mips64-elf/lib/libdragon.a(dma.o)
+ *fill*         0x8001b6a5        0x3 
  .rodata.__func__.0
-                0x8001b1e8        0xf /n64_toolchain/mips64-elf/lib/libdragon.a(dma.o)
- *fill*         0x8001b1f7        0x1 
+                0x8001b6a8        0xf /n64_toolchain/mips64-elf/lib/libdragon.a(dma.o)
+ *fill*         0x8001b6b7        0x1 
  .rodata.__func__.2
-                0x8001b1f8       0x13 /n64_toolchain/mips64-elf/lib/libdragon.a(dma.o)
- *fill*         0x8001b20b        0x5 
+                0x8001b6b8       0x13 /n64_toolchain/mips64-elf/lib/libdragon.a(dma.o)
+ *fill*         0x8001b6cb        0x5 
  .rodata.cb.0.str1.8
-                0x8001b210       0x17 /n64_toolchain/mips64-elf/lib/libdragon.a(exception.o)
- *fill*         0x8001b227        0x1 
+                0x8001b6d0       0x17 /n64_toolchain/mips64-elf/lib/libdragon.a(exception.o)
+ *fill*         0x8001b6e7        0x1 
  .rodata.cb.1.str1.8
-                0x8001b228       0x11 /n64_toolchain/mips64-elf/lib/libdragon.a(exception.o)
+                0x8001b6e8       0x11 /n64_toolchain/mips64-elf/lib/libdragon.a(exception.o)
                                  0x19 (size before relaxing)
- *fill*         0x8001b239        0x7 
+ *fill*         0x8001b6f9        0x7 
  .rodata.__get_exception_name.isra.0.str1.8
-                0x8001b240      0x20a /n64_toolchain/mips64-elf/lib/libdragon.a(exception.o)
- *fill*         0x8001b44a        0x2 
+                0x8001b700      0x20a /n64_toolchain/mips64-elf/lib/libdragon.a(exception.o)
+ *fill*         0x8001b90a        0x2 
  .rodata.__get_exception_name.isra.0
-                0x8001b44c       0x40 /n64_toolchain/mips64-elf/lib/libdragon.a(exception.o)
- *fill*         0x8001b48c        0x4 
+                0x8001b90c       0x40 /n64_toolchain/mips64-elf/lib/libdragon.a(exception.o)
+ *fill*         0x8001b94c        0x4 
  .rodata.__exception_dump_header.str1.8
-                0x8001b490       0xd8 /n64_toolchain/mips64-elf/lib/libdragon.a(exception.o)
+                0x8001b950       0xd8 /n64_toolchain/mips64-elf/lib/libdragon.a(exception.o)
                                  0xe0 (size before relaxing)
  .rodata.__exception_dump_gpr.str1.8
-                0x8001b568       0x34 /n64_toolchain/mips64-elf/lib/libdragon.a(exception.o)
- *fill*         0x8001b59c        0x4 
+                0x8001ba28       0x34 /n64_toolchain/mips64-elf/lib/libdragon.a(exception.o)
+ *fill*         0x8001ba5c        0x4 
  .rodata.__exception_dump_fpr.str1.8
-                0x8001b5a0       0x3e /n64_toolchain/mips64-elf/lib/libdragon.a(exception.o)
- *fill*         0x8001b5de        0x2 
+                0x8001ba60       0x3e /n64_toolchain/mips64-elf/lib/libdragon.a(exception.o)
+ *fill*         0x8001ba9e        0x2 
  .rodata.exception_default_handler.str1.8
-                0x8001b5e0       0x3e /n64_toolchain/mips64-elf/lib/libdragon.a(exception.o)
- *fill*         0x8001b61e        0x2 
+                0x8001baa0       0x3e /n64_toolchain/mips64-elf/lib/libdragon.a(exception.o)
+ *fill*         0x8001bade        0x2 
  .rodata.register_syscall_handler.str1.8
-                0x8001b620      0x13b /n64_toolchain/mips64-elf/lib/libdragon.a(exception.o)
+                0x8001bae0      0x13b /n64_toolchain/mips64-elf/lib/libdragon.a(exception.o)
                                 0x143 (size before relaxing)
- *fill*         0x8001b75b        0x5 
+ *fill*         0x8001bc1b        0x5 
  .rodata.__func__.2
-                0x8001b760       0x19 /n64_toolchain/mips64-elf/lib/libdragon.a(exception.o)
- *fill*         0x8001b779        0x7 
+                0x8001bc20       0x19 /n64_toolchain/mips64-elf/lib/libdragon.a(exception.o)
+ *fill*         0x8001bc39        0x7 
  .rodata.str1.8
-                0x8001b780      0x17e /n64_toolchain/mips64-elf/lib/libdragon.a(exception.o)
- *fill*         0x8001b8fe        0x2 
+                0x8001bc40      0x17e /n64_toolchain/mips64-elf/lib/libdragon.a(exception.o)
+ *fill*         0x8001bdbe        0x2 
  .rodata.exceptionMap.3
-                0x8001b900       0x80 /n64_toolchain/mips64-elf/lib/libdragon.a(exception.o)
+                0x8001bdc0       0x80 /n64_toolchain/mips64-elf/lib/libdragon.a(exception.o)
  .rodata.__do_global_ctors.str1.8
-                0x8001b980       0xa1 /n64_toolchain/mips64-elf/lib/libdragon.a(do_ctors.o)
- *fill*         0x8001ba21        0x7 
+                0x8001be40       0xa1 /n64_toolchain/mips64-elf/lib/libdragon.a(do_ctors.o)
+ *fill*         0x8001bee1        0x7 
  .rodata.__wrap___do_global_ctors.str1.8
-                0x8001ba28       0xbb /n64_toolchain/mips64-elf/lib/libdragon.a(do_ctors.o)
- *fill*         0x8001bae3        0x5 
+                0x8001bee8       0xbb /n64_toolchain/mips64-elf/lib/libdragon.a(do_ctors.o)
+ *fill*         0x8001bfa3        0x5 
  .rodata.__func__.0
-                0x8001bae8       0x19 /n64_toolchain/mips64-elf/lib/libdragon.a(do_ctors.o)
- *fill*         0x8001bb01        0x7 
+                0x8001bfa8       0x19 /n64_toolchain/mips64-elf/lib/libdragon.a(do_ctors.o)
+ *fill*         0x8001bfc1        0x7 
  .rodata.malloc_uncached_aligned.str1.8
-                0x8001bb08       0x3d /n64_toolchain/mips64-elf/lib/libdragon.a(n64sys.o)
- *fill*         0x8001bb45        0x3 
+                0x8001bfc8       0x3d /n64_toolchain/mips64-elf/lib/libdragon.a(n64sys.o)
+ *fill*         0x8001c005        0x3 
  .rodata.__func__.0
-                0x8001bb48       0x18 /n64_toolchain/mips64-elf/lib/libdragon.a(n64sys.o)
+                0x8001c008       0x18 /n64_toolchain/mips64-elf/lib/libdragon.a(n64sys.o)
  .rodata.__CART_handler.str1.8
-                0x8001bb60       0x8a /n64_toolchain/mips64-elf/lib/libdragon.a(interrupt.o)
- *fill*         0x8001bbea        0x6 
+                0x8001c020       0x8a /n64_toolchain/mips64-elf/lib/libdragon.a(interrupt.o)
+ *fill*         0x8001c0aa        0x6 
  .rodata.enable_interrupts.str1.8
-                0x8001bbf0       0x3c /n64_toolchain/mips64-elf/lib/libdragon.a(interrupt.o)
- *fill*         0x8001bc2c        0x4 
+                0x8001c0b0       0x3c /n64_toolchain/mips64-elf/lib/libdragon.a(interrupt.o)
+ *fill*         0x8001c0ec        0x4 
  .rodata.__func__.0
-                0x8001bc30       0x12 /n64_toolchain/mips64-elf/lib/libdragon.a(interrupt.o)
- *fill*         0x8001bc42        0x6 
+                0x8001c0f0       0x12 /n64_toolchain/mips64-elf/lib/libdragon.a(interrupt.o)
+ *fill*         0x8001c102        0x6 
  .rodata.__func__.3
-                0x8001bc48        0xf /n64_toolchain/mips64-elf/lib/libdragon.a(interrupt.o)
- *fill*         0x8001bc57        0x1 
+                0x8001c108        0xf /n64_toolchain/mips64-elf/lib/libdragon.a(interrupt.o)
+ *fill*         0x8001c117        0x1 
  .rodata.symt_open.str1.8
-                0x8001bc58       0xc3 /n64_toolchain/mips64-elf/lib/libdragon.a(backtrace.o)
+                0x8001c118       0xc3 /n64_toolchain/mips64-elf/lib/libdragon.a(backtrace.o)
  .rodata.format_entry.str1.8
-                0x8001bd1b       0x14 /n64_toolchain/mips64-elf/lib/libdragon.a(backtrace.o)
- *fill*         0x8001bd1b        0x5 
+                0x8001c1db       0x14 /n64_toolchain/mips64-elf/lib/libdragon.a(backtrace.o)
+ *fill*         0x8001c1db        0x5 
  .rodata.symt_addrtab_search.str1.8
-                0x8001bd20       0x38 /n64_toolchain/mips64-elf/lib/libdragon.a(backtrace.o)
+                0x8001c1e0       0x38 /n64_toolchain/mips64-elf/lib/libdragon.a(backtrace.o)
  .rodata.__symbolize.str1.8
-                0x8001bd58        0xc /n64_toolchain/mips64-elf/lib/libdragon.a(backtrace.o)
+                0x8001c218        0xc /n64_toolchain/mips64-elf/lib/libdragon.a(backtrace.o)
                                  0x13 (size before relaxing)
- *fill*         0x8001bd64        0x4 
+ *fill*         0x8001c224        0x4 
  .rodata.__bt_analyze_func.str1.8
-                0x8001bd68       0x42 /n64_toolchain/mips64-elf/lib/libdragon.a(backtrace.o)
- *fill*         0x8001bdaa        0x6 
+                0x8001c228       0x42 /n64_toolchain/mips64-elf/lib/libdragon.a(backtrace.o)
+ *fill*         0x8001c26a        0x6 
  .rodata.backtrace_foreach.str1.8
-                0x8001bdb0       0x81 /n64_toolchain/mips64-elf/lib/libdragon.a(backtrace.o)
- *fill*         0x8001be31        0x7 
+                0x8001c270       0x81 /n64_toolchain/mips64-elf/lib/libdragon.a(backtrace.o)
+ *fill*         0x8001c2f1        0x7 
  .rodata.backtrace_symbols_cb.str1.8
-                0x8001be38       0x22 /n64_toolchain/mips64-elf/lib/libdragon.a(backtrace.o)
- *fill*         0x8001be5a        0x6 
+                0x8001c2f8       0x22 /n64_toolchain/mips64-elf/lib/libdragon.a(backtrace.o)
+ *fill*         0x8001c31a        0x6 
  .rodata.backtrace_frame_print.str1.8
-                0x8001be60       0x2d /n64_toolchain/mips64-elf/lib/libdragon.a(backtrace.o)
+                0x8001c320       0x2d /n64_toolchain/mips64-elf/lib/libdragon.a(backtrace.o)
                                  0x35 (size before relaxing)
- *fill*         0x8001be8d        0x3 
+ *fill*         0x8001c34d        0x3 
  .rodata.backtrace_frame_print_compact.str1.8
-                0x8001be90       0x2a /n64_toolchain/mips64-elf/lib/libdragon.a(backtrace.o)
- *fill*         0x8001beba        0x6 
+                0x8001c350       0x2a /n64_toolchain/mips64-elf/lib/libdragon.a(backtrace.o)
+ *fill*         0x8001c37a        0x6 
  .rodata.__func__.2
-                0x8001bec0       0x13 /n64_toolchain/mips64-elf/lib/libdragon.a(backtrace.o)
- *fill*         0x8001bed3        0x5 
+                0x8001c380       0x13 /n64_toolchain/mips64-elf/lib/libdragon.a(backtrace.o)
+ *fill*         0x8001c393        0x5 
  .rodata.rompak_search_ext.str1.8
-                0x8001bed8       0xb7 /n64_toolchain/mips64-elf/lib/libdragon.a(rompak.o)
- *fill*         0x8001bf8f        0x1 
+                0x8001c398       0xb7 /n64_toolchain/mips64-elf/lib/libdragon.a(rompak.o)
+ *fill*         0x8001c44f        0x1 
  .rodata.__func__.0
-                0x8001bf90       0x12 /n64_toolchain/mips64-elf/lib/libdragon.a(rompak.o)
- *fill*         0x8001bfa2        0x6 
+                0x8001c450       0x12 /n64_toolchain/mips64-elf/lib/libdragon.a(rompak.o)
+ *fill*         0x8001c462        0x6 
  .rodata.display_show.part.0.str1.8
-                0x8001bfa8       0xf9 /n64_toolchain/mips64-elf/lib/libdragon.a(display.o)
- *fill*         0x8001c0a1        0x7 
+                0x8001c468       0xf9 /n64_toolchain/mips64-elf/lib/libdragon.a(display.o)
+ *fill*         0x8001c561        0x7 
  .rodata.display_init.str1.8
-                0x8001c0a8      0x199 /n64_toolchain/mips64-elf/lib/libdragon.a(display.o)
- *fill*         0x8001c241        0x7 
+                0x8001c568      0x199 /n64_toolchain/mips64-elf/lib/libdragon.a(display.o)
+ *fill*         0x8001c701        0x7 
  .rodata.__func__.0
-                0x8001c248        0xd /n64_toolchain/mips64-elf/lib/libdragon.a(display.o)
- *fill*         0x8001c255        0x3 
+                0x8001c708        0xd /n64_toolchain/mips64-elf/lib/libdragon.a(display.o)
+ *fill*         0x8001c715        0x3 
  .rodata.__func__.1
-                0x8001c258        0xd /n64_toolchain/mips64-elf/lib/libdragon.a(display.o)
- *fill*         0x8001c265        0x3 
+                0x8001c718        0xd /n64_toolchain/mips64-elf/lib/libdragon.a(display.o)
+ *fill*         0x8001c725        0x3 
  .rodata.reg_values
-                0x8001c268       0x18 /n64_toolchain/mips64-elf/lib/libdragon.a(display.o)
+                0x8001c728       0x18 /n64_toolchain/mips64-elf/lib/libdragon.a(display.o)
  .rodata.mpal_i
-                0x8001c280       0x38 /n64_toolchain/mips64-elf/lib/libdragon.a(display.o)
- .rodata.pal_i  0x8001c2b8       0x38 /n64_toolchain/mips64-elf/lib/libdragon.a(display.o)
+                0x8001c740       0x38 /n64_toolchain/mips64-elf/lib/libdragon.a(display.o)
+ .rodata.pal_i  0x8001c778       0x38 /n64_toolchain/mips64-elf/lib/libdragon.a(display.o)
  .rodata.ntsc_i
-                0x8001c2f0       0x38 /n64_toolchain/mips64-elf/lib/libdragon.a(display.o)
+                0x8001c7b0       0x38 /n64_toolchain/mips64-elf/lib/libdragon.a(display.o)
  .rodata.mpal_p
-                0x8001c328       0x38 /n64_toolchain/mips64-elf/lib/libdragon.a(display.o)
- .rodata.pal_p  0x8001c360       0x38 /n64_toolchain/mips64-elf/lib/libdragon.a(display.o)
+                0x8001c7e8       0x38 /n64_toolchain/mips64-elf/lib/libdragon.a(display.o)
+ .rodata.pal_p  0x8001c820       0x38 /n64_toolchain/mips64-elf/lib/libdragon.a(display.o)
  .rodata.ntsc_p
-                0x8001c398       0x38 /n64_toolchain/mips64-elf/lib/libdragon.a(display.o)
+                0x8001c858       0x38 /n64_toolchain/mips64-elf/lib/libdragon.a(display.o)
  .rodata.surface_alloc.str1.8
-                0x8001c3d0       0x62 /n64_toolchain/mips64-elf/lib/libdragon.a(surface.o)
- *fill*         0x8001c432        0x6 
+                0x8001c890       0x62 /n64_toolchain/mips64-elf/lib/libdragon.a(surface.o)
+ *fill*         0x8001c8f2        0x6 
  .rodata.__func__.1
-                0x8001c438        0xe /n64_toolchain/mips64-elf/lib/libdragon.a(surface.o)
- *fill*         0x8001c446        0x2 
+                0x8001c8f8        0xe /n64_toolchain/mips64-elf/lib/libdragon.a(surface.o)
+ *fill*         0x8001c906        0x2 
  .rodata.controller_scan.str1.8
-                0x8001c448       0x51 /n64_toolchain/mips64-elf/lib/libdragon.a(controller.o)
- *fill*         0x8001c499        0x7 
+                0x8001c908       0x51 /n64_toolchain/mips64-elf/lib/libdragon.a(controller.o)
+ *fill*         0x8001c959        0x7 
  .rodata.__func__.2
-                0x8001c4a0       0x10 /n64_toolchain/mips64-elf/lib/libdragon.a(controller.o)
+                0x8001c960       0x10 /n64_toolchain/mips64-elf/lib/libdragon.a(controller.o)
  .rodata.SI_read_con_block.8
-                0x8001c4b0       0x40 /n64_toolchain/mips64-elf/lib/libdragon.a(controller.o)
+                0x8001c970       0x40 /n64_toolchain/mips64-elf/lib/libdragon.a(controller.o)
  .rodata.SI_read_con_block.9
-                0x8001c4f0       0x40 /n64_toolchain/mips64-elf/lib/libdragon.a(controller.o)
+                0x8001c9b0       0x40 /n64_toolchain/mips64-elf/lib/libdragon.a(controller.o)
  .rodata.__font_data_32
-                0x8001c530     0x8008 /n64_toolchain/mips64-elf/lib/libdragon.a(graphics.o)
+                0x8001c9f0     0x8008 /n64_toolchain/mips64-elf/lib/libdragon.a(graphics.o)
  .rodata.__font_data_16
-                0x80024538     0x4008 /n64_toolchain/mips64-elf/lib/libdragon.a(graphics.o)
+                0x800249f8     0x4008 /n64_toolchain/mips64-elf/lib/libdragon.a(graphics.o)
  .rodata.joybus_msg_send.str1.8
-                0x80028540       0x55 /n64_toolchain/mips64-elf/lib/libdragon.a(joybus.o)
- *fill*         0x80028595        0x3 
+                0x80028a00       0x55 /n64_toolchain/mips64-elf/lib/libdragon.a(joybus.o)
+ *fill*         0x80028a55        0x3 
  .rodata.si_interrupt.str1.8
-                0x80028598       0x40 /n64_toolchain/mips64-elf/lib/libdragon.a(joybus.o)
+                0x80028a58       0x40 /n64_toolchain/mips64-elf/lib/libdragon.a(joybus.o)
  .rodata.joybus_exec_async.str1.8
-                0x800285d8       0x4a /n64_toolchain/mips64-elf/lib/libdragon.a(joybus.o)
- *fill*         0x80028622        0x6 
+                0x80028a98       0x4a /n64_toolchain/mips64-elf/lib/libdragon.a(joybus.o)
+ *fill*         0x80028ae2        0x6 
  .rodata.__func__.1
-                0x80028628       0x12 /n64_toolchain/mips64-elf/lib/libdragon.a(joybus.o)
- *fill*         0x8002863a        0x6 
+                0x80028ae8       0x12 /n64_toolchain/mips64-elf/lib/libdragon.a(joybus.o)
+ *fill*         0x80028afa        0x6 
  .rodata.__func__.2
-                0x80028640       0x10 /n64_toolchain/mips64-elf/lib/libdragon.a(joybus.o)
+                0x80028b00       0x10 /n64_toolchain/mips64-elf/lib/libdragon.a(joybus.o)
  .rodata.__func__.3
-                0x80028650       0x10 /n64_toolchain/mips64-elf/lib/libdragon.a(joybus.o)
+                0x80028b10       0x10 /n64_toolchain/mips64-elf/lib/libdragon.a(joybus.o)
  .rodata.__func__.4
-                0x80028660        0xd /n64_toolchain/mips64-elf/lib/libdragon.a(joybus.o)
- *fill*         0x8002866d        0x3 
+                0x80028b20        0xd /n64_toolchain/mips64-elf/lib/libdragon.a(joybus.o)
+ *fill*         0x80028b2d        0x3 
  .rodata.text_init.str1.8
-                0x80028670       0x69 build/text.o
- *fill*         0x800286d9        0x7 
- .rodata.fps_draw.str1.8
-                0x800286e0        0xa build/fps.o
- *fill*         0x800286ea        0x6 
+                0x80028b30       0x69 build/text.o
+ *fill*         0x80028b99        0x7 
  .rodata.about_screen_draw.str1.8
-                0x800286f0      0x10a build/main.o
- *fill*         0x800287fa        0x6 
+                0x80028ba0      0x10a build/main.o
+ *fill*         0x80028caa        0x6 
  .rodata.help_menu_draw.str1.8
-                0x80028800      0x154 build/main.o
- *fill*         0x80028954        0x4 
+                0x80028cb0      0x154 build/main.o
+ *fill*         0x80028e04        0x4 
  .rodata.main_menu_draw.str1.8
-                0x80028958       0x18 build/main.o
+                0x80028e08       0x18 build/main.o
                                  0x1a (size before relaxing)
  .rodata.practice_tool_draw.str1.8
-                0x80028970       0x5c build/main.o
- *fill*         0x800289cc        0x4 
- .rodata.main.str1.8
-                0x800289d0        0xf build/main.o
- *fill*         0x800289df        0x1 
+                0x80028e20       0x94 build/main.o
+ *fill*         0x80028eb4        0x4 
  .rodata.str1.8
-                0x800289e0        0xd build/main.o
- *fill*         0x800289ed        0x3 
+                0x80028eb8        0xd build/main.o
+ *fill*         0x80028ec5        0x3 
  .rodata.options
-                0x800289f0        0xc build/main.o
- *fill*         0x800289fc        0x4 
+                0x80028ec8        0xc build/main.o
+ *fill*         0x80028ed4        0x4 
  .rodata.RESOLUTION_320x240
-                0x80028a00        0xc build/main.o
- *fill*         0x80028a0c        0x4 
+                0x80028ed8        0xc build/main.o
+ *fill*         0x80028ee4        0x4 
+ .rodata.sfx_init.str1.8
+                0x80028ee8       0x13 build/sfx.o
+ *fill*         0x80028efb        0x5 
  .rodata.__open.str1.8
-                0x80028a10        0x2 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(dragonfs.o)
- *fill*         0x80028a12        0x6 
+                0x80028f00        0x2 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(dragonfs.o)
+ *fill*         0x80028f02        0x6 
  .rodata.dfs_read.str1.8
-                0x80028a18        0xf /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(dragonfs.o)
+                0x80028f08        0xf /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(dragonfs.o)
                                  0x3f (size before relaxing)
- *fill*         0x80028a27        0x1 
+ *fill*         0x80028f17        0x1 
  .rodata.dfs_init.str1.8
-                0x80028a28       0x86 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(dragonfs.o)
+                0x80028f18       0x86 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(dragonfs.o)
                                  0x8e (size before relaxing)
- *fill*         0x80028aae        0x2 
+ *fill*         0x80028f9e        0x2 
  .rodata.__func__.0
-                0x80028ab0       0x16 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(dragonfs.o)
- *fill*         0x80028ac6        0x2 
+                0x80028fa0       0x16 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(dragonfs.o)
+ *fill*         0x80028fb6        0x2 
  .rodata.__func__.1
-                0x80028ac8        0x9 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(dragonfs.o)
- *fill*         0x80028ad1        0x7 
+                0x80028fb8        0x9 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(dragonfs.o)
+ *fill*         0x80028fc1        0x7 
  .rodata.timer_poll.str1.8
-                0x80028ad8       0x89 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(timer.o)
- *fill*         0x80028b61        0x7 
+                0x80028fc8       0x89 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(timer.o)
+ *fill*         0x80029051        0x7 
  .rodata.timer_init.str1.8
-                0x80028b68       0x31 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(timer.o)
- *fill*         0x80028b99        0x7 
+                0x80029058       0x31 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(timer.o)
+ *fill*         0x80029089        0x7 
  .rodata.new_timer.str1.8
-                0x80028ba0       0x2d /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(timer.o)
- *fill*         0x80028bcd        0x3 
+                0x80029090       0x2d /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(timer.o)
+ *fill*         0x800290bd        0x3 
  .rodata.__func__.0
-                0x80028bd0        0xc /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(timer.o)
- *fill*         0x80028bdc        0x4 
+                0x800290c0        0xc /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(timer.o)
+ *fill*         0x800290cc        0x4 
  .rodata.__func__.8
-                0x80028be0        0xb /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(timer.o)
- *fill*         0x80028beb        0x5 
+                0x800290d0        0xb /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(timer.o)
+ *fill*         0x800290db        0x5 
  .rodata.__func__.9
-                0x80028bf0        0xb /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(timer.o)
+                0x800290e0        0xb /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(timer.o)
  .rodata.str1.8
-                0x80028bfb        0x2 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libc.a(libc_a-puts.o)
- *fill*         0x80028bfb        0x5 
+                0x800290eb        0x2 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libc.a(libc_a-puts.o)
+ *fill*         0x800290eb        0x5 
  .rodata.str1.8
-                0x80028c00       0x57 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libc.a(libc_a-svfprintf.o)
+                0x800290f0       0x57 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libc.a(libc_a-svfprintf.o)
                                  0x5a (size before relaxing)
- *fill*         0x80028c57        0x1 
+ *fill*         0x80029147        0x1 
  .rodata.str1.8
-                0x80028c58       0x69 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libc.a(libc_a-dtoa.o)
+                0x80029148       0x69 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libc.a(libc_a-dtoa.o)
                                  0x71 (size before relaxing)
  .rodata.str1.8
-                0x80028cc1       0x5a /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libc.a(libc_a-vfprintf.o)
+                0x800291b1       0x5a /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libc.a(libc_a-vfprintf.o)
  .rodata.str1.8
-                0x80028cc1       0x37 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libc.a(libc_a-vfiprintf.o)
- *fill*         0x80028cc1        0x7 
+                0x800291b1       0x37 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libc.a(libc_a-vfiprintf.o)
+ *fill*         0x800291b1        0x7 
  .rodata.str1.8
-                0x80028cc8       0x3a /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libc.a(libc_a-mprec.o)
+                0x800291b8       0x3a /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libc.a(libc_a-mprec.o)
                                  0x52 (size before relaxing)
- *fill*         0x80028d02        0x6 
+ *fill*         0x800291f2        0x6 
  .rodata.str1.8
-                0x80028d08        0xe /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libc.a(libc_a-locale.o)
+                0x800291f8        0xe /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libc.a(libc_a-locale.o)
                                  0x1a (size before relaxing)
  .rodata.str1.8
-                0x80028d16       0x37 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libc.a(libc_a-svfiprintf.o)
+                0x80029206       0x37 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libc.a(libc_a-svfiprintf.o)
  *(.gnu.linkonce.r.*)
-                0x80028d50                        . = ALIGN (0x8)
- *fill*         0x80028d16        0x2 
+                0x80029240                        . = ALIGN (0x8)
+ *fill*         0x80029206        0x2 
 
-.MIPS.abiflags  0x80028d18       0x18
+.MIPS.abiflags  0x80029208       0x18
  .MIPS.abiflags
-                0x80028d18       0x18 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/crti.o
+                0x80029208       0x18 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/crti.o
 
-.rel.dyn        0x80028d30        0x0
- .rel.dyn       0x80028d30        0x0 /n64_toolchain/mips64-elf/lib/libdragon.a(inspector.o)
-                0x80028d30                        . = ALIGN (0x4)
+.rel.dyn        0x80029220        0x0
+ .rel.dyn       0x80029220        0x0 /n64_toolchain/mips64-elf/lib/libdragon.a(inspector.o)
+                0x80029220                        . = ALIGN (0x4)
 
-.ctors          0x80028d30       0x18
-                0x80028d30                        __CTOR_LIST__ = .
+.ctors          0x80029220       0x18
+                0x80029220                        __CTOR_LIST__ = .
  *(.ctors)
- .ctors         0x80028d30        0x4 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/crtbegin.o
- .ctors         0x80028d34        0x4 /n64_toolchain/mips64-elf/lib/libdragon.a(inspector.o)
- .ctors         0x80028d38        0x4 /n64_toolchain/mips64-elf/lib/libdragon.a(n64sys.o)
- .ctors         0x80028d3c        0x4 /n64_toolchain/mips64-elf/lib/libdragon.a(interrupt.o)
- .ctors         0x80028d40        0x4 /n64_toolchain/mips64-elf/lib/libdragon.a(joybus.o)
- .ctors         0x80028d44        0x4 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/crtend.o
-                0x80028d48                        __CTOR_END__ = .
-                0x80028d48                        . = ALIGN (0x8)
+ .ctors         0x80029220        0x4 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/crtbegin.o
+ .ctors         0x80029224        0x4 /n64_toolchain/mips64-elf/lib/libdragon.a(inspector.o)
+ .ctors         0x80029228        0x4 /n64_toolchain/mips64-elf/lib/libdragon.a(n64sys.o)
+ .ctors         0x8002922c        0x4 /n64_toolchain/mips64-elf/lib/libdragon.a(interrupt.o)
+ .ctors         0x80029230        0x4 /n64_toolchain/mips64-elf/lib/libdragon.a(joybus.o)
+ .ctors         0x80029234        0x4 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/crtend.o
+                0x80029238                        __CTOR_END__ = .
+                0x80029238                        . = ALIGN (0x8)
 
-.data           0x80028d48      0x7d8
-                0x80028d48                        __data_start = .
+.data           0x80029238      0x7d8
+                0x80029238                        __data_start = .
  *(.data)
- .data          0x80028d48      0x408 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libc.a(libc_a-mallocr.o)
-                0x80028d48                __malloc_av_
- .data          0x80029150        0xc /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libc.a(libc_a-findfp.o)
-                0x80029150                __sglue
- *fill*         0x8002915c        0x4 
- .data          0x80029160      0x16c /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libc.a(libc_a-locale.o)
-                0x80029160                __global_locale
- *fill*         0x800292cc        0x4 
- .data          0x800292d0      0x120 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libc.a(libc_a-impure.o)
-                0x800292d0                _impure_data
+ .data          0x80029238      0x408 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libc.a(libc_a-mallocr.o)
+                0x80029238                __malloc_av_
+ .data          0x80029640        0xc /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libc.a(libc_a-findfp.o)
+                0x80029640                __sglue
+ *fill*         0x8002964c        0x4 
+ .data          0x80029650      0x16c /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libc.a(libc_a-locale.o)
+                0x80029650                __global_locale
+ *fill*         0x800297bc        0x4 
+ .data          0x800297c0      0x120 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libc.a(libc_a-impure.o)
+                0x800297c0                _impure_data
  *(.data.*)
  .data.__mips_fpreg
-                0x800293f0       0x80 /n64_toolchain/mips64-elf/lib/libdragon.a(inspector.o)
-                0x800293f0                __mips_fpreg
+                0x800298e0       0x80 /n64_toolchain/mips64-elf/lib/libdragon.a(inspector.o)
+                0x800298e0                __mips_fpreg
  .data.__mips_gpr
-                0x80029470       0x88 /n64_toolchain/mips64-elf/lib/libdragon.a(inspector.o)
-                0x80029470                __mips_gpr
+                0x80029960       0x88 /n64_toolchain/mips64-elf/lib/libdragon.a(inspector.o)
+                0x80029960                __mips_gpr
  .data.dragon_fs
-                0x800294f8       0x24 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(dragonfs.o)
+                0x800299e8       0x24 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(dragonfs.o)
  *(.gnu.linkonce.d.*)
-                0x80029520                        . = ALIGN (0x8)
- *fill*         0x8002951c        0x4 
+                0x80029a10                        . = ALIGN (0x8)
+ *fill*         0x80029a0c        0x4 
 
-.sdata          0x80029520       0xc0
-                0x80031520                        _gp = (. + 0x8000)
+.sdata          0x80029a10       0xd8
+                0x80031a10                        _gp = (. + 0x8000)
  *(.sdata)
- .sdata         0x80029520       0x10 /n64_toolchain/mips64-elf/lib/libdragon.a(exception.o)
- .sdata         0x80029530        0x8 build/fps.o
- .sdata         0x80029538        0x8 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libc.a(libc_a-svfprintf.o)
- .sdata         0x80029540       0x48 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libc.a(libc_a-dtoa.o)
- .sdata         0x80029588        0x8 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libc.a(libc_a-mallocr.o)
-                0x80029588                __malloc_sbrk_base
-                0x8002958c                __malloc_trim_threshold
- .sdata         0x80029590        0x8 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libc.a(libc_a-vfprintf.o)
- .sdata         0x80029598       0x10 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libc.a(libc_a-mprec.o)
- .sdata         0x800295a8        0x4 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libc.a(libc_a-impure.o)
-                0x800295a8                _impure_ptr
+ .sdata         0x80029a10       0x10 /n64_toolchain/mips64-elf/lib/libdragon.a(exception.o)
+ .sdata         0x80029a20        0x8 build/fps.o
+ .sdata         0x80029a28        0x8 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libc.a(libc_a-svfprintf.o)
+ .sdata         0x80029a30       0x48 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libc.a(libc_a-dtoa.o)
+ .sdata         0x80029a78        0x8 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libc.a(libc_a-mallocr.o)
+                0x80029a78                __malloc_sbrk_base
+                0x80029a7c                __malloc_trim_threshold
+ .sdata         0x80029a80        0x8 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libc.a(libc_a-vfprintf.o)
+ .sdata         0x80029a88       0x10 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libc.a(libc_a-mprec.o)
+ .sdata         0x80029a98        0x4 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libc.a(libc_a-impure.o)
+                0x80029a98                _impure_ptr
  *(.sdata.*)
  .sdata.first_backtrace
-                0x800295ac        0x1 /n64_toolchain/mips64-elf/lib/libdragon.a(inspector.o)
- *fill*         0x800295ad        0x3 
+                0x80029a9c        0x1 /n64_toolchain/mips64-elf/lib/libdragon.a(inspector.o)
+ *fill*         0x80029a9d        0x3 
  .sdata.fpr_show_mode
-                0x800295b0        0x4 /n64_toolchain/mips64-elf/lib/libdragon.a(inspector.o)
+                0x80029aa0        0x4 /n64_toolchain/mips64-elf/lib/libdragon.a(inspector.o)
  .sdata.__exception_handler
-                0x800295b4        0x4 /n64_toolchain/mips64-elf/lib/libdragon.a(exception.o)
+                0x80029aa4        0x4 /n64_toolchain/mips64-elf/lib/libdragon.a(exception.o)
  .sdata.__bootcic
-                0x800295b8        0x4 /n64_toolchain/mips64-elf/lib/libdragon.a(n64sys.o)
-                0x800295b8                __bootcic
+                0x80029aa8        0x4 /n64_toolchain/mips64-elf/lib/libdragon.a(n64sys.o)
+                0x80029aa8                __bootcic
  .sdata.__interrupt_depth
-                0x800295bc        0x4 /n64_toolchain/mips64-elf/lib/libdragon.a(interrupt.o)
+                0x80029aac        0x4 /n64_toolchain/mips64-elf/lib/libdragon.a(interrupt.o)
  .sdata.SYMT_ROM
-                0x800295c0        0x4 /n64_toolchain/mips64-elf/lib/libdragon.a(backtrace.o)
+                0x80029ab0        0x4 /n64_toolchain/mips64-elf/lib/libdragon.a(backtrace.o)
  .sdata.now_showing
-                0x800295c4        0x4 /n64_toolchain/mips64-elf/lib/libdragon.a(display.o)
+                0x80029ab4        0x4 /n64_toolchain/mips64-elf/lib/libdragon.a(display.o)
  .sdata.__buffers
-                0x800295c8        0x4 /n64_toolchain/mips64-elf/lib/libdragon.a(display.o)
+                0x80029ab8        0x4 /n64_toolchain/mips64-elf/lib/libdragon.a(display.o)
  .sdata.f_color
-                0x800295cc        0x4 /n64_toolchain/mips64-elf/lib/libdragon.a(graphics.o)
+                0x80029abc        0x4 /n64_toolchain/mips64-elf/lib/libdragon.a(graphics.o)
  .sdata.line_height
-                0x800295d0        0x4 build/text.o
-                0x800295d0                line_height
+                0x80029ac0        0x4 build/text.o
+                0x80029ac0                line_height
+ .sdata.rhythm_mode
+                0x80029ac4        0x4 build/main.o
+ .sdata.frame_gap
+                0x80029ac8        0x4 build/main.o
+ *fill*         0x80029acc        0x4 
+ .sdata.SFX_FILE_SIZE
+                0x80029ad0        0x8 build/sfx.o
  .sdata.next_handle.2
-                0x800295d4        0x4 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(dragonfs.o)
+                0x80029ad8        0x4 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(dragonfs.o)
  .sdata._num_buf
-                0x800295d8        0x4 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(audio.o)
+                0x80029adc        0x4 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(audio.o)
  .sdata.console_redirect_debug
-                0x800295dc        0x1 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(console.o)
+                0x80029ae0        0x1 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(console.o)
  *(.gnu.linkonce.s.*)
-                0x800295e0                        . = ALIGN (0x8)
- *fill*         0x800295dd        0x3 
+                0x80029ae8                        . = ALIGN (0x8)
+ *fill*         0x80029ae1        0x7 
 
-.lit8           0x800295e0        0x0
+.lit8           0x80029ae8        0x0
  *(.lit8)
-                0x800295e0                        . = ALIGN (0x8)
+                0x80029ae8                        . = ALIGN (0x8)
 
-.lit4           0x800295e0        0x0
+.lit4           0x80029ae8        0x0
  *(.lit4)
-                0x800295e0                        . = ALIGN (0x8)
-                0x800295e0                        . = ALIGN (0x8)
-                0x800295e0                        __data_end = .
-                0x800295e0                        . = ALIGN (0x8)
-                0x800295e0                        __rom_end = .
+                0x80029ae8                        . = ALIGN (0x8)
+                0x80029ae8                        . = ALIGN (0x8)
+                0x80029ae8                        __data_end = .
+                0x80029ae8                        . = ALIGN (0x8)
+                0x80029ae8                        __rom_end = .
 
-.sbss           0x800295e0      0x110
-                0x800295e0                        __bss_start = .
+.sbss           0x80029ae8      0x11c
+                0x80029ae8                        __bss_start = .
  *(.sbss)
- .sbss          0x800295e0        0x4 /n64_toolchain/mips64-elf/lib/libdragon.a(inthandler.o)
- .sbss          0x800295e4        0xc /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libc.a(libc_a-mallocr.o)
-                0x800295e4                __malloc_max_total_mem
-                0x800295e8                __malloc_max_sbrked_mem
-                0x800295ec                __malloc_top_pad
- .sbss          0x800295f0        0x4 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libc.a(libc_a-findfp.o)
-                0x800295f0                __stdio_exit_handler
+ .sbss          0x80029ae8        0x4 /n64_toolchain/mips64-elf/lib/libdragon.a(inthandler.o)
+ .sbss          0x80029aec        0xc /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libc.a(libc_a-mallocr.o)
+                0x80029aec                __malloc_max_total_mem
+                0x80029af0                __malloc_max_sbrked_mem
+                0x80029af4                __malloc_top_pad
+ .sbss          0x80029af8        0x4 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libc.a(libc_a-findfp.o)
+                0x80029af8                __stdio_exit_handler
  *(.sbss.*)
  .sbss.backtrace.5
-                0x800295f4        0x1 /n64_toolchain/mips64-elf/lib/libdragon.a(inspector.o)
+                0x80029afc        0x1 /n64_toolchain/mips64-elf/lib/libdragon.a(inspector.o)
  .sbss.in_inspector.6
-                0x800295f5        0x1 /n64_toolchain/mips64-elf/lib/libdragon.a(inspector.o)
- *fill*         0x800295f6        0x2 
+                0x80029afd        0x1 /n64_toolchain/mips64-elf/lib/libdragon.a(inspector.o)
+ *fill*         0x80029afe        0x2 
  .sbss.disasm_offset
-                0x800295f8        0x4 /n64_toolchain/mips64-elf/lib/libdragon.a(inspector.o)
+                0x80029b00        0x4 /n64_toolchain/mips64-elf/lib/libdragon.a(inspector.o)
  .sbss.disasm_max_frames
-                0x800295fc        0x4 /n64_toolchain/mips64-elf/lib/libdragon.a(inspector.o)
+                0x80029b04        0x4 /n64_toolchain/mips64-elf/lib/libdragon.a(inspector.o)
  .sbss.disasm_bt_idx
-                0x80029600        0x4 /n64_toolchain/mips64-elf/lib/libdragon.a(inspector.o)
- .sbss.disp     0x80029604        0x4 /n64_toolchain/mips64-elf/lib/libdragon.a(inspector.o)
+                0x80029b08        0x4 /n64_toolchain/mips64-elf/lib/libdragon.a(inspector.o)
+ .sbss.disp     0x80029b0c        0x4 /n64_toolchain/mips64-elf/lib/libdragon.a(inspector.o)
  .sbss.cursor_wordwrap
-                0x80029608        0x4 /n64_toolchain/mips64-elf/lib/libdragon.a(inspector.o)
+                0x80029b10        0x4 /n64_toolchain/mips64-elf/lib/libdragon.a(inspector.o)
  .sbss.cursor_columns
-                0x8002960c        0x4 /n64_toolchain/mips64-elf/lib/libdragon.a(inspector.o)
+                0x80029b14        0x4 /n64_toolchain/mips64-elf/lib/libdragon.a(inspector.o)
  .sbss.cursor_y
-                0x80029610        0x4 /n64_toolchain/mips64-elf/lib/libdragon.a(inspector.o)
+                0x80029b18        0x4 /n64_toolchain/mips64-elf/lib/libdragon.a(inspector.o)
  .sbss.cursor_x
-                0x80029614        0x4 /n64_toolchain/mips64-elf/lib/libdragon.a(inspector.o)
+                0x80029b1c        0x4 /n64_toolchain/mips64-elf/lib/libdragon.a(inspector.o)
  .sbss.backtrace_exception.4
-                0x80029618        0x1 /n64_toolchain/mips64-elf/lib/libdragon.a(exception.o)
- *fill*         0x80029619        0x3 
+                0x80029b20        0x1 /n64_toolchain/mips64-elf/lib/libdragon.a(exception.o)
+ *fill*         0x80029b21        0x3 
  .sbss.__bbplayer
-                0x8002961c        0x4 /n64_toolchain/mips64-elf/lib/libdragon.a(n64sys.o)
-                0x8002961c                __bbplayer
+                0x80029b24        0x4 /n64_toolchain/mips64-elf/lib/libdragon.a(n64sys.o)
+                0x80029b24                __bbplayer
  .sbss.last_cart_interrupt_count
-                0x80029620        0x4 /n64_toolchain/mips64-elf/lib/libdragon.a(interrupt.o)
+                0x80029b28        0x4 /n64_toolchain/mips64-elf/lib/libdragon.a(interrupt.o)
  .sbss.__prenmi_tick
-                0x80029624        0x4 /n64_toolchain/mips64-elf/lib/libdragon.a(interrupt.o)
+                0x80029b2c        0x4 /n64_toolchain/mips64-elf/lib/libdragon.a(interrupt.o)
  .sbss.CART_callback
-                0x80029628        0x4 /n64_toolchain/mips64-elf/lib/libdragon.a(interrupt.o)
-                0x80029628                CART_callback
+                0x80029b30        0x4 /n64_toolchain/mips64-elf/lib/libdragon.a(interrupt.o)
+                0x80029b30                CART_callback
  .sbss.TI_callback
-                0x8002962c        0x4 /n64_toolchain/mips64-elf/lib/libdragon.a(interrupt.o)
-                0x8002962c                TI_callback
+                0x80029b34        0x4 /n64_toolchain/mips64-elf/lib/libdragon.a(interrupt.o)
+                0x80029b34                TI_callback
  .sbss.SP_callback
-                0x80029630        0x4 /n64_toolchain/mips64-elf/lib/libdragon.a(interrupt.o)
-                0x80029630                SP_callback
+                0x80029b38        0x4 /n64_toolchain/mips64-elf/lib/libdragon.a(interrupt.o)
+                0x80029b38                SP_callback
  .sbss.SI_callback
-                0x80029634        0x4 /n64_toolchain/mips64-elf/lib/libdragon.a(interrupt.o)
-                0x80029634                SI_callback
+                0x80029b3c        0x4 /n64_toolchain/mips64-elf/lib/libdragon.a(interrupt.o)
+                0x80029b3c                SI_callback
  .sbss.DP_callback
-                0x80029638        0x4 /n64_toolchain/mips64-elf/lib/libdragon.a(interrupt.o)
-                0x80029638                DP_callback
+                0x80029b40        0x4 /n64_toolchain/mips64-elf/lib/libdragon.a(interrupt.o)
+                0x80029b40                DP_callback
  .sbss.PI_callback
-                0x8002963c        0x4 /n64_toolchain/mips64-elf/lib/libdragon.a(interrupt.o)
-                0x8002963c                PI_callback
+                0x80029b44        0x4 /n64_toolchain/mips64-elf/lib/libdragon.a(interrupt.o)
+                0x80029b44                PI_callback
  .sbss.VI_callback
-                0x80029640        0x4 /n64_toolchain/mips64-elf/lib/libdragon.a(interrupt.o)
-                0x80029640                VI_callback
+                0x80029b48        0x4 /n64_toolchain/mips64-elf/lib/libdragon.a(interrupt.o)
+                0x80029b48                VI_callback
  .sbss.AI_callback
-                0x80029644        0x4 /n64_toolchain/mips64-elf/lib/libdragon.a(interrupt.o)
-                0x80029644                AI_callback
+                0x80029b4c        0x4 /n64_toolchain/mips64-elf/lib/libdragon.a(interrupt.o)
+                0x80029b4c                AI_callback
  .sbss.interrupt_disabled_tick
-                0x80029648        0x4 /n64_toolchain/mips64-elf/lib/libdragon.a(interrupt.o)
-                0x80029648                interrupt_disabled_tick
+                0x80029b50        0x4 /n64_toolchain/mips64-elf/lib/libdragon.a(interrupt.o)
+                0x80029b50                interrupt_disabled_tick
  .sbss.__interrupt_sr
-                0x8002964c        0x4 /n64_toolchain/mips64-elf/lib/libdragon.a(interrupt.o)
+                0x80029b54        0x4 /n64_toolchain/mips64-elf/lib/libdragon.a(interrupt.o)
  .sbss.rompak_corrupted.1
-                0x80029650        0x1 /n64_toolchain/mips64-elf/lib/libdragon.a(rompak.o)
- *fill*         0x80029651        0x3 
+                0x80029b58        0x1 /n64_toolchain/mips64-elf/lib/libdragon.a(rompak.o)
+ *fill*         0x80029b59        0x3 
  .sbss.ready_mask
-                0x80029654        0x4 /n64_toolchain/mips64-elf/lib/libdragon.a(display.o)
+                0x80029b5c        0x4 /n64_toolchain/mips64-elf/lib/libdragon.a(display.o)
  .sbss.drawing_mask
-                0x80029658        0x4 /n64_toolchain/mips64-elf/lib/libdragon.a(display.o)
+                0x80029b60        0x4 /n64_toolchain/mips64-elf/lib/libdragon.a(display.o)
  .sbss.__height
-                0x8002965c        0x4 /n64_toolchain/mips64-elf/lib/libdragon.a(display.o)
- .sbss.__width  0x80029660        0x4 /n64_toolchain/mips64-elf/lib/libdragon.a(display.o)
+                0x80029b64        0x4 /n64_toolchain/mips64-elf/lib/libdragon.a(display.o)
+ .sbss.__width  0x80029b68        0x4 /n64_toolchain/mips64-elf/lib/libdragon.a(display.o)
  .sbss.__bitdepth
-                0x80029664        0x4 /n64_toolchain/mips64-elf/lib/libdragon.a(display.o)
+                0x80029b6c        0x4 /n64_toolchain/mips64-elf/lib/libdragon.a(display.o)
  .sbss.surfaces
-                0x80029668        0x4 /n64_toolchain/mips64-elf/lib/libdragon.a(display.o)
+                0x80029b70        0x4 /n64_toolchain/mips64-elf/lib/libdragon.a(display.o)
  .sbss.controller_inited
-                0x8002966c        0x1 /n64_toolchain/mips64-elf/lib/libdragon.a(controller.o)
+                0x80029b74        0x1 /n64_toolchain/mips64-elf/lib/libdragon.a(controller.o)
  .sbss.controller_autoscan_in_progress
-                0x8002966d        0x1 /n64_toolchain/mips64-elf/lib/libdragon.a(controller.o)
- *fill*         0x8002966e        0x2 
- .sbss.b_color  0x80029670        0x4 /n64_toolchain/mips64-elf/lib/libdragon.a(graphics.o)
+                0x80029b75        0x1 /n64_toolchain/mips64-elf/lib/libdragon.a(controller.o)
+ *fill*         0x80029b76        0x2 
+ .sbss.b_color  0x80029b78        0x4 /n64_toolchain/mips64-elf/lib/libdragon.a(graphics.o)
  .sbss.msgs_ridx
-                0x80029674        0x4 /n64_toolchain/mips64-elf/lib/libdragon.a(joybus.o)
+                0x80029b7c        0x4 /n64_toolchain/mips64-elf/lib/libdragon.a(joybus.o)
  .sbss.msgs_widx
-                0x80029678        0x4 /n64_toolchain/mips64-elf/lib/libdragon.a(joybus.o)
+                0x80029b80        0x4 /n64_toolchain/mips64-elf/lib/libdragon.a(joybus.o)
  .sbss.joybus_state
-                0x8002967c        0x4 /n64_toolchain/mips64-elf/lib/libdragon.a(joybus.o)
+                0x80029b84        0x4 /n64_toolchain/mips64-elf/lib/libdragon.a(joybus.o)
  .sbss.heap_top.0
-                0x80029680        0x4 /n64_toolchain/mips64-elf/lib/libdragonsys.a(system.o)
+                0x80029b88        0x4 /n64_toolchain/mips64-elf/lib/libdragonsys.a(system.o)
  .sbss.heap_end.1
-                0x80029684        0x4 /n64_toolchain/mips64-elf/lib/libdragonsys.a(system.o)
+                0x80029b8c        0x4 /n64_toolchain/mips64-elf/lib/libdragonsys.a(system.o)
  .sbss.__assert_func_ptr
-                0x80029688        0x4 /n64_toolchain/mips64-elf/lib/libdragonsys.a(system.o)
-                0x80029688                __assert_func_ptr
- .sbss.errno    0x8002968c        0x4 /n64_toolchain/mips64-elf/lib/libdragonsys.a(system.o)
-                0x8002968c                errno
+                0x80029b90        0x4 /n64_toolchain/mips64-elf/lib/libdragonsys.a(system.o)
+                0x80029b90                __assert_func_ptr
+ .sbss.errno    0x80029b94        0x4 /n64_toolchain/mips64-elf/lib/libdragonsys.a(system.o)
+                0x80029b94                errno
  .sbss.current_font
-                0x80029690        0x4 build/text.o
-                0x80029690                current_font
+                0x80029b98        0x4 build/text.o
+                0x80029b98                current_font
  .sbss.average_fps
-                0x80029694        0x4 build/fps.o
-                0x80029694                average_fps
+                0x80029b9c        0x4 build/fps.o
+                0x80029b9c                average_fps
  .sbss.last_frame_tick
-                0x80029698        0x8 build/fps.o
-                0x80029698                last_frame_tick
- .sbss.frame_gap
-                0x800296a0        0x4 build/main.o
+                0x80029ba0        0x8 build/fps.o
+                0x80029ba0                last_frame_tick
  .sbss.current_frame
-                0x800296a4        0x4 build/main.o
+                0x80029ba8        0x4 build/main.o
  .sbss.menu_selection
-                0x800296a8        0x4 build/main.o
- .sbss.gfx      0x800296ac        0x4 build/gfx.o
-                0x800296ac                gfx
+                0x80029bac        0x4 build/main.o
+ .sbss.gfx      0x80029bb0        0x4 build/gfx.o
+                0x80029bb0                gfx
+ *fill*         0x80029bb4        0x4 
+ .sbss.sfx_audio
+                0x80029bb8        0x8 build/sfx.o
+                0x80029bb8                sfx_audio
+ .sbss.audio_enabled
+                0x80029bc0        0x1 build/sfx.o
+ *fill*         0x80029bc1        0x3 
  .sbss.next_entry
-                0x800296b0        0x4 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(dragonfs.o)
+                0x80029bc4        0x4 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(dragonfs.o)
  .sbss.directory_top
-                0x800296b4        0x4 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(dragonfs.o)
+                0x80029bc8        0x4 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(dragonfs.o)
  .sbss.base_ptr
-                0x800296b8        0x4 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(dragonfs.o)
+                0x80029bcc        0x4 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(dragonfs.o)
  .sbss.buf_full
-                0x800296bc        0x4 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(audio.o)
+                0x80029bd0        0x4 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(audio.o)
  .sbss.now_writing
-                0x800296c0        0x4 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(audio.o)
+                0x80029bd4        0x4 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(audio.o)
  .sbss.now_empty
-                0x800296c4        0x4 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(audio.o)
+                0x80029bd8        0x4 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(audio.o)
  .sbss.playing_queue
-                0x800296c8        0x4 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(audio.o)
+                0x80029bdc        0x4 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(audio.o)
  .sbss.now_playing
-                0x800296cc        0x4 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(audio.o)
- .sbss._paused  0x800296d0        0x1 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(audio.o)
- *fill*         0x800296d1        0x3 
+                0x80029be0        0x4 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(audio.o)
+ .sbss._paused  0x80029be4        0x1 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(audio.o)
+ *fill*         0x80029be5        0x3 
  .sbss._fill_buffer_callback
-                0x800296d4        0x4 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(audio.o)
+                0x80029be8        0x4 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(audio.o)
  .sbss.buffers_orig
-                0x800296d8        0x4 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(audio.o)
- .sbss.buffers  0x800296dc        0x4 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(audio.o)
+                0x80029bec        0x4 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(audio.o)
+ .sbss.buffers  0x80029bf0        0x4 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(audio.o)
  .sbss._buf_size
-                0x800296e0        0x4 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(audio.o)
+                0x80029bf4        0x4 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(audio.o)
  .sbss._frequency
-                0x800296e4        0x4 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(audio.o)
+                0x80029bf8        0x4 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(audio.o)
  .sbss.ticks64_high
-                0x800296e8        0x4 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(timer.o)
-                0x800296e8                ticks64_high
+                0x80029bfc        0x4 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(timer.o)
+                0x80029bfc                ticks64_high
  .sbss.TI_timers
-                0x800296ec        0x4 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(timer.o)
+                0x80029c00        0x4 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(timer.o)
  *(.gnu.linkonce.sb.*)
  *(.scommon)
  *(.scommon.*)
-                0x800296f0                        . = ALIGN (0x8)
+                0x80029c08                        . = ALIGN (0x8)
 
-.bss            0x800296f0     0x16d0
+.bss            0x80029c10     0x16c0
  *(.bss)
- .bss           0x800296f0       0x28 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libc.a(libc_a-mallocr.o)
-                0x800296f0                __malloc_current_mallinfo
- .bss           0x80029718      0x138 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libc.a(libc_a-findfp.o)
-                0x80029718                __sf
+ .bss           0x80029c10       0x28 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libc.a(libc_a-mallocr.o)
+                0x80029c10                __malloc_current_mallinfo
+ .bss           0x80029c38      0x138 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libc.a(libc_a-findfp.o)
+                0x80029c38                __sf
  *(.bss*)
  .bss.__syscall_handlers
-                0x80029850       0x30 /n64_toolchain/mips64-elf/lib/libdragon.a(exception.o)
+                0x80029d70       0x30 /n64_toolchain/mips64-elf/lib/libdragon.a(exception.o)
  .bss.eh_frame_object
-                0x80029880       0x18 /n64_toolchain/mips64-elf/lib/libdragon.a(do_ctors.o)
+                0x80029da0       0x18 /n64_toolchain/mips64-elf/lib/libdragon.a(do_ctors.o)
  .bss.__prenmi_handlers
-                0x80029898       0x10 /n64_toolchain/mips64-elf/lib/libdragon.a(interrupt.o)
+                0x80029db8       0x10 /n64_toolchain/mips64-elf/lib/libdragon.a(interrupt.o)
  .bss.__safe_buffer
-                0x800298a8       0x80 /n64_toolchain/mips64-elf/lib/libdragon.a(display.o)
- .bss.prev      0x80029928       0x40 /n64_toolchain/mips64-elf/lib/libdragon.a(controller.o)
- .bss.current   0x80029968       0x40 /n64_toolchain/mips64-elf/lib/libdragon.a(controller.o)
- .bss.next      0x800299a8       0x40 /n64_toolchain/mips64-elf/lib/libdragon.a(controller.o)
+                0x80029dc8       0x80 /n64_toolchain/mips64-elf/lib/libdragon.a(display.o)
+ .bss.prev      0x80029e48       0x40 /n64_toolchain/mips64-elf/lib/libdragon.a(controller.o)
+ .bss.current   0x80029e88       0x40 /n64_toolchain/mips64-elf/lib/libdragon.a(controller.o)
+ .bss.next      0x80029ec8       0x40 /n64_toolchain/mips64-elf/lib/libdragon.a(controller.o)
  .bss.sprite_font
-                0x800299e8        0xc /n64_toolchain/mips64-elf/lib/libdragon.a(graphics.o)
- *fill*         0x800299f4        0xc 
+                0x80029f08        0xc /n64_toolchain/mips64-elf/lib/libdragon.a(graphics.o)
+ *fill*         0x80029f14        0xc 
  .bss.joybus_msgs
-                0x80029a00      0x280 /n64_toolchain/mips64-elf/lib/libdragon.a(joybus.o)
+                0x80029f20      0x280 /n64_toolchain/mips64-elf/lib/libdragon.a(joybus.o)
  .bss.joybus_outbuf
-                0x80029c80       0x40 /n64_toolchain/mips64-elf/lib/libdragon.a(joybus.o)
+                0x8002a1a0       0x40 /n64_toolchain/mips64-elf/lib/libdragon.a(joybus.o)
  .bss.stdio_hooks
-                0x80029cc0        0xc /n64_toolchain/mips64-elf/lib/libdragonsys.a(system.o)
- *fill*         0x80029ccc        0x4 
- .bss.handles   0x80029cd0      0x4b0 /n64_toolchain/mips64-elf/lib/libdragonsys.a(system.o)
+                0x8002a1e0        0xc /n64_toolchain/mips64-elf/lib/libdragonsys.a(system.o)
+ *fill*         0x8002a1ec        0x4 
+ .bss.handles   0x8002a1f0      0x4b0 /n64_toolchain/mips64-elf/lib/libdragonsys.a(system.o)
  .bss.filesystems
-                0x8002a180       0x50 /n64_toolchain/mips64-elf/lib/libdragonsys.a(system.o)
- .bss.fonts     0x8002a1d0      0x108 build/text.o
-                0x8002a1d0                fonts
- .bss.fps_text.0
-                0x8002a2d8        0xb build/fps.o
- *fill*         0x8002a2e3        0x5 
+                0x8002a6a0       0x50 /n64_toolchain/mips64-elf/lib/libdragonsys.a(system.o)
+ .bss.fonts     0x8002a6f0      0x108 build/text.o
+                0x8002a6f0                fonts
  .bss.blj_frames
-                0x8002a2e8       0x1e build/main.o
- *fill*         0x8002a306        0x2 
+                0x8002a7f8       0x1e build/main.o
+ *fill*         0x8002a816        0x2 
  .bss.stick_down_frames
-                0x8002a308       0x10 build/input.o
-                0x8002a308                stick_down_frames
+                0x8002a818       0x10 build/input.o
+                0x8002a818                stick_down_frames
  .bss.stick_up_frames
-                0x8002a318       0x10 build/input.o
-                0x8002a318                stick_up_frames
+                0x8002a828       0x10 build/input.o
+                0x8002a828                stick_up_frames
  .bss.held_keys
-                0x8002a328       0x40 build/input.o
-                0x8002a328                held_keys
+                0x8002a838       0x40 build/input.o
+                0x8002a838                held_keys
  .bss.pressed_keys
-                0x8002a368       0x40 build/input.o
-                0x8002a368                pressed_keys
+                0x8002a878       0x40 build/input.o
+                0x8002a878                pressed_keys
  .bss.directories
-                0x8002a3a8      0x190 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(dragonfs.o)
- *fill*         0x8002a538        0x8 
+                0x8002a8b8      0x190 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(dragonfs.o)
+ *fill*         0x8002aa48        0x8 
  .bss.open_files
-                0x8002a540      0x880 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(dragonfs.o)
+                0x8002aa50      0x880 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(dragonfs.o)
  *(.gnu.linkonce.b.*)
  *(COMMON)
-                0x8002adc0                        . = ALIGN (0x8)
-                0x8002adc0                        __bss_end = .
-                0x8002adc0                        . = ALIGN (0x8)
-                0x8002adc0                        end = .
+                0x8002b2d0                        . = ALIGN (0x8)
+                0x8002b2d0                        __bss_end = .
+                0x8002b2d0                        . = ALIGN (0x8)
+                0x8002b2d0                        end = .
 LOAD /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libstdc++.a
 LOAD /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libm.a
 LOAD /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libc.a
@@ -4242,7 +4266,7 @@ OUTPUT(build/sm64-blj-trainer-1.3.elf elf32-bigmips)
  .comment       0x00000012       0x13 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libc.a(libc_a-errno.o)
  .comment       0x00000012       0x13 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/crtend.o
 
-.debug_info     0x00000000    0x1bf62
+.debug_info     0x00000000    0x1c4c5
  .debug_info    0x00000000     0x2d6d /n64_toolchain/mips64-elf/lib/libdragon.a(debug.o)
  .debug_info    0x00002d6d     0x28c3 /n64_toolchain/mips64-elf/lib/libdragon.a(inspector.o)
  .debug_info    0x00005630      0xd1d /n64_toolchain/mips64-elf/lib/libdragon.a(dma.o)
@@ -4260,16 +4284,16 @@ OUTPUT(build/sm64-blj-trainer-1.3.elf elf32-bigmips)
  .debug_info    0x00011e60     0x1cf9 /n64_toolchain/mips64-elf/lib/libdragonsys.a(system.o)
  .debug_info    0x00013b59      0xe88 build/text.o
  .debug_info    0x000149e1      0x568 build/fps.o
- .debug_info    0x00014f49     0x1376 build/main.o
- .debug_info    0x000162bf      0x83d build/gfx.o
- .debug_info    0x00016afc      0x607 build/input.o
- .debug_info    0x00017103      0x3ae build/sfx.o
- .debug_info    0x000174b1     0x2034 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(dragonfs.o)
- .debug_info    0x000194e5      0xa6d /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(audio.o)
- .debug_info    0x00019f52     0x10c0 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(console.o)
- .debug_info    0x0001b012      0xf50 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(timer.o)
+ .debug_info    0x00014f49     0x166f build/main.o
+ .debug_info    0x000165b8      0x83d build/gfx.o
+ .debug_info    0x00016df5      0x6a0 build/input.o
+ .debug_info    0x00017495      0x57f build/sfx.o
+ .debug_info    0x00017a14     0x2034 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(dragonfs.o)
+ .debug_info    0x00019a48      0xa6d /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(audio.o)
+ .debug_info    0x0001a4b5     0x10c0 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(console.o)
+ .debug_info    0x0001b575      0xf50 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(timer.o)
 
-.debug_abbrev   0x00000000     0x64b1
+.debug_abbrev   0x00000000     0x657f
  .debug_abbrev  0x00000000      0x66f /n64_toolchain/mips64-elf/lib/libdragon.a(debug.o)
  .debug_abbrev  0x0000066f      0x6bb /n64_toolchain/mips64-elf/lib/libdragon.a(inspector.o)
  .debug_abbrev  0x00000d2a      0x461 /n64_toolchain/mips64-elf/lib/libdragon.a(dma.o)
@@ -4287,17 +4311,17 @@ OUTPUT(build/sm64-blj-trainer-1.3.elf elf32-bigmips)
  .debug_abbrev  0x00003dea      0x5f1 /n64_toolchain/mips64-elf/lib/libdragonsys.a(system.o)
  .debug_abbrev  0x000043db      0x332 build/text.o
  .debug_abbrev  0x0000470d      0x1ff build/fps.o
- .debug_abbrev  0x0000490c      0x3d2 build/main.o
- .debug_abbrev  0x00004cde      0x29c build/gfx.o
- .debug_abbrev  0x00004f7a      0x199 build/input.o
- .debug_abbrev  0x00005113      0x1bd build/sfx.o
- .debug_abbrev  0x000052d0      0x501 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(dragonfs.o)
- .debug_abbrev  0x000057d1      0x3c8 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(audio.o)
- .debug_abbrev  0x00005b99      0x4ca /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(console.o)
- .debug_abbrev  0x00006063      0x44e /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(timer.o)
+ .debug_abbrev  0x0000490c      0x40b build/main.o
+ .debug_abbrev  0x00004d17      0x29c build/gfx.o
+ .debug_abbrev  0x00004fb3      0x199 build/input.o
+ .debug_abbrev  0x0000514c      0x252 build/sfx.o
+ .debug_abbrev  0x0000539e      0x501 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(dragonfs.o)
+ .debug_abbrev  0x0000589f      0x3c8 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(audio.o)
+ .debug_abbrev  0x00005c67      0x4ca /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(console.o)
+ .debug_abbrev  0x00006131      0x44e /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(timer.o)
 
 .debug_loclists
-                0x00000000     0xd3ba
+                0x00000000     0xd45d
  .debug_loclists
                 0x00000000      0xe74 /n64_toolchain/mips64-elf/lib/libdragon.a(debug.o)
  .debug_loclists
@@ -4333,23 +4357,23 @@ OUTPUT(build/sm64-blj-trainer-1.3.elf elf32-bigmips)
  .debug_loclists
                 0x0000b010       0x2e build/fps.o
  .debug_loclists
-                0x0000b03e      0x213 build/main.o
+                0x0000b03e      0x230 build/main.o
  .debug_loclists
-                0x0000b251      0x16b build/gfx.o
+                0x0000b26e      0x16b build/gfx.o
  .debug_loclists
-                0x0000b3bc       0xae build/input.o
+                0x0000b3d9       0xed build/input.o
  .debug_loclists
-                0x0000b46a       0x58 build/sfx.o
+                0x0000b4c6       0x9f build/sfx.o
  .debug_loclists
-                0x0000b4c2      0xfd4 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(dragonfs.o)
+                0x0000b565      0xfd4 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(dragonfs.o)
  .debug_loclists
-                0x0000c496      0x222 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(audio.o)
+                0x0000c539      0x222 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(audio.o)
  .debug_loclists
-                0x0000c6b8      0x24c /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(console.o)
+                0x0000c75b      0x24c /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(console.o)
  .debug_loclists
-                0x0000c904      0xab6 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(timer.o)
+                0x0000c9a7      0xab6 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(timer.o)
 
-.debug_aranges  0x00000000      0xd40
+.debug_aranges  0x00000000      0xd68
  .debug_aranges
                 0x00000000      0x138 /n64_toolchain/mips64-elf/lib/libdragon.a(debug.o)
  .debug_aranges
@@ -4385,24 +4409,24 @@ OUTPUT(build/sm64-blj-trainer-1.3.elf elf32-bigmips)
  .debug_aranges
                 0x000009a8       0x28 build/fps.o
  .debug_aranges
-                0x000009d0       0x70 build/main.o
+                0x000009d0       0x80 build/main.o
  .debug_aranges
-                0x00000a40       0x58 build/gfx.o
+                0x00000a50       0x58 build/gfx.o
  .debug_aranges
-                0x00000a98       0x50 build/input.o
+                0x00000aa8       0x68 build/input.o
  .debug_aranges
-                0x00000ae8       0x38 build/sfx.o
+                0x00000b10       0x38 build/sfx.o
  .debug_aranges
-                0x00000b20       0xc0 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(dragonfs.o)
+                0x00000b48       0xc0 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(dragonfs.o)
  .debug_aranges
-                0x00000be0       0x88 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(audio.o)
+                0x00000c08       0x88 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(audio.o)
  .debug_aranges
-                0x00000c68       0x58 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(console.o)
+                0x00000c90       0x58 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(console.o)
  .debug_aranges
-                0x00000cc0       0x80 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(timer.o)
+                0x00000ce8       0x80 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(timer.o)
 
 .debug_rnglists
-                0x00000000     0x1d51
+                0x00000000     0x1d8f
  .debug_rnglists
                 0x00000000      0x1e5 /n64_toolchain/mips64-elf/lib/libdragon.a(debug.o)
  .debug_rnglists
@@ -4438,23 +4462,23 @@ OUTPUT(build/sm64-blj-trainer-1.3.elf elf32-bigmips)
  .debug_rnglists
                 0x0000165e       0x1a build/fps.o
  .debug_rnglists
-                0x00001678       0xdb build/main.o
+                0x00001678       0xfa build/main.o
  .debug_rnglists
-                0x00001753       0x3f build/gfx.o
+                0x00001772       0x3f build/gfx.o
  .debug_rnglists
-                0x00001792       0x4b build/input.o
+                0x000017b1       0x5d build/input.o
  .debug_rnglists
-                0x000017dd       0x25 build/sfx.o
+                0x0000180e       0x32 build/sfx.o
  .debug_rnglists
-                0x00001802      0x2ff /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(dragonfs.o)
+                0x00001840      0x2ff /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(dragonfs.o)
  .debug_rnglists
-                0x00001b01       0xa8 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(audio.o)
+                0x00001b3f       0xa8 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(audio.o)
  .debug_rnglists
-                0x00001ba9       0xaf /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(console.o)
+                0x00001be7       0xaf /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(console.o)
  .debug_rnglists
-                0x00001c58       0xf9 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(timer.o)
+                0x00001c96       0xf9 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(timer.o)
 
-.debug_line     0x00000000     0xe6c4
+.debug_line     0x00000000     0xe9db
  .debug_line    0x00000000      0xf49 /n64_toolchain/mips64-elf/lib/libdragon.a(debug.o)
  .debug_line    0x00000f49     0x11aa /n64_toolchain/mips64-elf/lib/libdragon.a(inspector.o)
  .debug_line    0x000020f3      0x949 /n64_toolchain/mips64-elf/lib/libdragon.a(dma.o)
@@ -4472,16 +4496,16 @@ OUTPUT(build/sm64-blj-trainer-1.3.elf elf32-bigmips)
  .debug_line    0x0000926f     0x10c4 /n64_toolchain/mips64-elf/lib/libdragonsys.a(system.o)
  .debug_line    0x0000a333      0x68c build/text.o
  .debug_line    0x0000a9bf      0x223 build/fps.o
- .debug_line    0x0000abe2      0x786 build/main.o
- .debug_line    0x0000b368      0x38b build/gfx.o
- .debug_line    0x0000b6f3      0x3c0 build/input.o
- .debug_line    0x0000bab3      0x1b3 build/sfx.o
- .debug_line    0x0000bc66     0x1248 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(dragonfs.o)
- .debug_line    0x0000ceae      0x920 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(audio.o)
- .debug_line    0x0000d7ce      0x618 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(console.o)
- .debug_line    0x0000dde6      0x8de /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(timer.o)
+ .debug_line    0x0000abe2      0x8ee build/main.o
+ .debug_line    0x0000b4d0      0x387 build/gfx.o
+ .debug_line    0x0000b857      0x4b6 build/input.o
+ .debug_line    0x0000bd0d      0x270 build/sfx.o
+ .debug_line    0x0000bf7d     0x1248 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(dragonfs.o)
+ .debug_line    0x0000d1c5      0x920 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(audio.o)
+ .debug_line    0x0000dae5      0x618 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(console.o)
+ .debug_line    0x0000e0fd      0x8de /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(timer.o)
 
-.debug_str      0x00000000     0x3bff
+.debug_str      0x00000000     0x3c83
  .debug_str     0x00000000      0xd9e /n64_toolchain/mips64-elf/lib/libdragon.a(debug.o)
                                0x1036 (size before relaxing)
  .debug_str     0x00000d9e      0x7d8 /n64_toolchain/mips64-elf/lib/libdragon.a(inspector.o)
@@ -4516,24 +4540,24 @@ OUTPUT(build/sm64-blj-trainer-1.3.elf elf32-bigmips)
                                 0x5ee (size before relaxing)
  .debug_str     0x00003177       0x7c build/fps.o
                                 0x45a (size before relaxing)
- .debug_str     0x000031f3      0x232 build/main.o
-                                0x9e1 (size before relaxing)
- .debug_str     0x00003425       0x4e build/gfx.o
+ .debug_str     0x000031f3      0x2b4 build/main.o
+                                0xa60 (size before relaxing)
+ .debug_str     0x000034a7       0x4e build/gfx.o
                                 0x4ee (size before relaxing)
- .debug_str     0x00003473       0x59 build/input.o
-                                0x32f (size before relaxing)
- .debug_str     0x000034cc       0x69 build/sfx.o
-                                0x2a8 (size before relaxing)
- .debug_str     0x00003535      0x33c /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(dragonfs.o)
+ .debug_str     0x000034f5       0x59 build/input.o
+                                0x34b (size before relaxing)
+ .debug_str     0x0000354e       0xad build/sfx.o
+                                0x35f (size before relaxing)
+ .debug_str     0x000035fb      0x33c /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(dragonfs.o)
                                 0x841 (size before relaxing)
- .debug_str     0x00003871      0x18c /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(audio.o)
+ .debug_str     0x00003937      0x14a /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(audio.o)
                                 0x527 (size before relaxing)
- .debug_str     0x000039fd       0xc6 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(console.o)
+ .debug_str     0x00003a81       0xc6 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(console.o)
                                 0x834 (size before relaxing)
- .debug_str     0x00003ac3      0x13c /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(timer.o)
+ .debug_str     0x00003b47      0x13c /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(timer.o)
                                 0x396 (size before relaxing)
 
-.debug_frame    0x00000000     0x2b18
+.debug_frame    0x00000000     0x2ba8
  .debug_frame   0x00000000      0x480 /n64_toolchain/mips64-elf/lib/libdragon.a(debug.o)
  .debug_frame   0x00000480      0x22c /n64_toolchain/mips64-elf/lib/libdragon.a(inspector.o)
  .debug_frame   0x000006ac      0x164 /n64_toolchain/mips64-elf/lib/libdragon.a(dma.o)
@@ -4551,11 +4575,11 @@ OUTPUT(build/sm64-blj-trainer-1.3.elf elf32-bigmips)
  .debug_frame   0x00001a64      0x378 /n64_toolchain/mips64-elf/lib/libdragonsys.a(system.o)
  .debug_frame   0x00001ddc      0x12c build/text.o
  .debug_frame   0x00001f08       0x54 build/fps.o
- .debug_frame   0x00001f5c      0x19c build/main.o
- .debug_frame   0x000020f8       0xe0 build/gfx.o
- .debug_frame   0x000021d8       0x98 build/input.o
- .debug_frame   0x00002270       0x64 build/sfx.o
- .debug_frame   0x000022d4      0x2dc /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(dragonfs.o)
- .debug_frame   0x000025b0      0x200 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(audio.o)
- .debug_frame   0x000027b0      0x144 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(console.o)
- .debug_frame   0x000028f4      0x224 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(timer.o)
+ .debug_frame   0x00001f5c      0x1d0 build/main.o
+ .debug_frame   0x0000212c       0xe0 build/gfx.o
+ .debug_frame   0x0000220c       0xc8 build/input.o
+ .debug_frame   0x000022d4       0x90 build/sfx.o
+ .debug_frame   0x00002364      0x2dc /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(dragonfs.o)
+ .debug_frame   0x00002640      0x200 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(audio.o)
+ .debug_frame   0x00002840      0x144 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(console.o)
+ .debug_frame   0x00002984      0x224 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(timer.o)

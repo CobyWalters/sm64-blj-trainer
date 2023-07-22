@@ -24,18 +24,36 @@ void input_tick() {
 }
 
 bool a_press() {
-    for (int i = 0; i < 4; ++i) {
-        if (pressed_keys.c[i].A) {
-            //sfx_play(SFX_CLICK);
+    for (int i = 0; i < 4; ++i)
+        if (pressed_keys.c[i].A)
             return true;
-        }
-    }
     return false;
 }
 
 bool b_press() {
     for (int i = 0; i < 4; ++i)
         if (pressed_keys.c[i].B)
+            return true;
+    return false;
+}
+
+bool l_press() {
+    for (int i = 0; i < 4; ++i)
+        if (pressed_keys.c[i].L)
+            return true;
+    return false;
+}
+
+bool r_press() {
+    for (int i = 0; i < 4; ++i)
+        if (pressed_keys.c[i].R)
+            return true;
+    return false;
+}
+
+bool start_press() {
+    for (int i = 0; i < 4; ++i)
+        if (pressed_keys.c[i].start)
             return true;
     return false;
 }

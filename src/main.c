@@ -57,12 +57,8 @@ int main(void) {
     /* Initial scan to avoid garbage input */
     controller_scan();
 
-    int16_t* sfx = (int16_t*)read_dfs_raw_audio("sfx/click2.raw");
-
     /* Run the main loop */
     while (1) {
-
-        //sfx_buffer_sound_effects();
 
         /* FPS control */
         bool new_frame = fps_tick();
@@ -71,10 +67,6 @@ int main(void) {
         /* Update controller state */
         controller_scan();
         input_tick();
-
-        if (a_press()) {
-            audio_write(sfx);
-        }
 
         /* Gamestate frame tick calculations */
         switch (game_state) {
