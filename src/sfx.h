@@ -22,5 +22,6 @@ void sfx_init(void);
 void sfx_play(sfx_id_t sfx_id);
 void sfx_toggle_audio();
 int16_t *read_dfs_raw_audio(const char *const file);
+void sfx_buffer_sound_effects();
 
 #endif

@@ -9,21 +9,17 @@
 
 #include "sfx.h"
 
-#define SFX_SAMPLE_RATE 16000
+#define SFX_SAMPLE_RATE 46100
 #define SFX_NUM_BUFFERS 1
 
 static bool audio_enabled;
 
+static wav64_t sfx_cache[SFX_ID_COUNT];
+
 /* This array must line up with sfx_id_t */
 static const char *const sfx_files[SFX_ID_COUNT] = {
-    "sfx/16bitclick.raw",
-};
-
-int16_t* sfx_audio[SFX_ID_COUNT];
-
-/* put the right number (in bytes) */
-static const int SFX_FILE_SIZE[SFX_ID_COUNT] = {
-    2108,
+    "sfx/click.wav64",
+    "sfx/select.wav64",
 };
 
 void sfx_init(void) {
@@ -31,27 +27,35 @@ void sfx_init(void) {
 
     audio_init(SFX_SAMPLE_RATE, SFX_NUM_BUFFERS);
     audio_write_silence();
-    for (size_t i = 0; i < SFX_ID_COUNT; ++i) {
-        sfx_audio[i] = (int16_t*) read_dfs_raw_audio(sfx_files[i]);
+    mixer_init(SFX_ID_COUNT);
+    /* Load the sound effects cache */
+    for (size_t i = 0; i < SFX_ID_COUNT; i++) {
+        wav64_open(&sfx_cache[i], sfx_files[i]);
     }
 }
 
 void sfx_play(sfx_id_t sfx_id) {
     if (!audio_enabled) return;
+    // Either of these give roughly the same result
+    //wav64_play(&sfx_cache[sfx_id], sfx_id);
+    mixer_ch_play(sfx_id, &sfx_cache[sfx_id].wave);
+}
 
-    uint8_t* buf = (uint8_t*) audio_write_begin();
-    memcpy(buf, sfx_audio[sfx_id], SFX_FILE_SIZE[sfx_id]);
-    memset(buf + SFX_FILE_SIZE[sfx_id], 0, audio_get_buffer_length() * 4 - SFX_FILE_SIZE[sfx_id]);
-    audio_write_end();
+void sfx_buffer_sound_effects() {
+    if (audio_can_write()) {
+        short *const buf = audio_write_begin();
+        mixer_poll(buf, audio_get_buffer_length());
+        audio_write_end();
+    }
 }
 
 void sfx_toggle_audio() {
     audio_enabled = !audio_enabled;
 }
 
-int16_t* read_dfs_raw_audio(const char *const file) {
+int16_t *read_dfs_raw_audio(const char *const file) {
     int fp = dfs_open(file);
-    int16_t* raw_audio = malloc(dfs_size(fp));
+    int16_t *raw_audio = malloc(dfs_size(fp));
     dfs_read(raw_audio, 1, dfs_size(fp), fp);
     dfs_close(fp);
     return raw_audio;

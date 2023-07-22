@@ -60,6 +60,8 @@ int main(void) {
     /* Run the main loop */
     while (1) {
 
+        sfx_buffer_sound_effects();
+        
         /* FPS control */
         bool new_frame = fps_tick();
         if (!new_frame) continue;
