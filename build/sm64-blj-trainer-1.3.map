@@ -4879,7 +4879,7 @@ OUTPUT(build/sm64-blj-trainer-1.3.elf elf32-bigmips)
  .comment       0x00000012       0x13 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libc.a(libc_a-errno.o)
  .comment       0x00000012       0x13 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/crtend.o
 
-.debug_info     0x00000000    0x25cb6
+.debug_info     0x00000000    0x25cbf
  .debug_info    0x00000000     0x2d6d /n64_toolchain/mips64-elf/lib/libdragon.a(debug.o)
  .debug_info    0x00002d6d     0x28c3 /n64_toolchain/mips64-elf/lib/libdragon.a(inspector.o)
  .debug_info    0x00005630      0xd1d /n64_toolchain/mips64-elf/lib/libdragon.a(dma.o)
@@ -4897,19 +4897,19 @@ OUTPUT(build/sm64-blj-trainer-1.3.elf elf32-bigmips)
  .debug_info    0x00011e60     0x1cf9 /n64_toolchain/mips64-elf/lib/libdragonsys.a(system.o)
  .debug_info    0x00013b59      0xe88 build/text.o
  .debug_info    0x000149e1      0x568 build/fps.o
- .debug_info    0x00014f49     0x1685 build/main.o
- .debug_info    0x000165ce      0x83d build/gfx.o
- .debug_info    0x00016e0b      0x6a0 build/input.o
- .debug_info    0x000174ab      0x741 build/sfx.o
- .debug_info    0x00017bec     0x2034 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(dragonfs.o)
- .debug_info    0x00019c20      0xa6d /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(audio.o)
- .debug_info    0x0001a68d     0x10c0 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(console.o)
- .debug_info    0x0001b74d      0xf50 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(timer.o)
- .debug_info    0x0001c69d     0x24f6 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(mixer.o)
- .debug_info    0x0001eb93      0x884 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(samplebuffer.o)
- .debug_info    0x0001f417      0xb23 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(wav64.o)
- .debug_info    0x0001ff3a     0x3a6d /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(rspq.o)
- .debug_info    0x000239a7     0x230f /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(rsp.o)
+ .debug_info    0x00014f49     0x168e build/main.o
+ .debug_info    0x000165d7      0x83d build/gfx.o
+ .debug_info    0x00016e14      0x6a0 build/input.o
+ .debug_info    0x000174b4      0x741 build/sfx.o
+ .debug_info    0x00017bf5     0x2034 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(dragonfs.o)
+ .debug_info    0x00019c29      0xa6d /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(audio.o)
+ .debug_info    0x0001a696     0x10c0 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(console.o)
+ .debug_info    0x0001b756      0xf50 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(timer.o)
+ .debug_info    0x0001c6a6     0x24f6 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(mixer.o)
+ .debug_info    0x0001eb9c      0x884 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(samplebuffer.o)
+ .debug_info    0x0001f420      0xb23 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(wav64.o)
+ .debug_info    0x0001ff43     0x3a6d /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(rspq.o)
+ .debug_info    0x000239b0     0x230f /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(rsp.o)
 
 .debug_abbrev   0x00000000     0x7f41
  .debug_abbrev  0x00000000      0x66f /n64_toolchain/mips64-elf/lib/libdragon.a(debug.o)
@@ -5131,7 +5131,7 @@ OUTPUT(build/sm64-blj-trainer-1.3.elf elf32-bigmips)
  .debug_rnglists
                 0x0000264f      0x128 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(rsp.o)
 
-.debug_line     0x00000000    0x12c9c
+.debug_line     0x00000000    0x12c9d
  .debug_line    0x00000000      0xf49 /n64_toolchain/mips64-elf/lib/libdragon.a(debug.o)
  .debug_line    0x00000f49     0x11aa /n64_toolchain/mips64-elf/lib/libdragon.a(inspector.o)
  .debug_line    0x000020f3      0x949 /n64_toolchain/mips64-elf/lib/libdragon.a(dma.o)
@@ -5149,19 +5149,19 @@ OUTPUT(build/sm64-blj-trainer-1.3.elf elf32-bigmips)
  .debug_line    0x0000926f     0x10c4 /n64_toolchain/mips64-elf/lib/libdragonsys.a(system.o)
  .debug_line    0x0000a333      0x68c build/text.o
  .debug_line    0x0000a9bf      0x223 build/fps.o
- .debug_line    0x0000abe2      0x8ef build/main.o
- .debug_line    0x0000b4d1      0x387 build/gfx.o
- .debug_line    0x0000b858      0x4b6 build/input.o
- .debug_line    0x0000bd0e      0x26c build/sfx.o
- .debug_line    0x0000bf7a     0x1248 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(dragonfs.o)
- .debug_line    0x0000d1c2      0x920 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(audio.o)
- .debug_line    0x0000dae2      0x618 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(console.o)
- .debug_line    0x0000e0fa      0x8de /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(timer.o)
- .debug_line    0x0000e9d8     0x12ea /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(mixer.o)
- .debug_line    0x0000fcc2      0x5ec /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(samplebuffer.o)
- .debug_line    0x000102ae      0x40e /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(wav64.o)
- .debug_line    0x000106bc     0x1714 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(rspq.o)
- .debug_line    0x00011dd0      0xecc /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(rsp.o)
+ .debug_line    0x0000abe2      0x8f0 build/main.o
+ .debug_line    0x0000b4d2      0x387 build/gfx.o
+ .debug_line    0x0000b859      0x4b6 build/input.o
+ .debug_line    0x0000bd0f      0x26c build/sfx.o
+ .debug_line    0x0000bf7b     0x1248 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(dragonfs.o)
+ .debug_line    0x0000d1c3      0x920 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(audio.o)
+ .debug_line    0x0000dae3      0x618 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(console.o)
+ .debug_line    0x0000e0fb      0x8de /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(timer.o)
+ .debug_line    0x0000e9d9     0x12ea /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(mixer.o)
+ .debug_line    0x0000fcc3      0x5ec /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(samplebuffer.o)
+ .debug_line    0x000102af      0x40e /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(wav64.o)
+ .debug_line    0x000106bd     0x1714 /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(rspq.o)
+ .debug_line    0x00011dd1      0xecc /n64_toolchain/lib/gcc/mips64-elf/13.1.0/../../../../mips64-elf/lib/libdragon.a(rsp.o)
 
 .debug_str      0x00000000     0x4c50
  .debug_str     0x00000000      0xd9e /n64_toolchain/mips64-elf/lib/libdragon.a(debug.o)
