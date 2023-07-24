@@ -10,6 +10,7 @@
 #ifndef SYSTEM_H
 #define SYSTEM_H
 
+#include <math.h>
 #include <stdio.h>
 #include <malloc.h>
 #include <string.h>
@@ -27,5 +28,8 @@ typedef enum {
 
 typedef struct SI_condat gamepad_state_t;
 typedef struct controller_data controllers_state_t;
+
+// Make sure this lines up with BUFFERS_PER_SECOND in libdragon's audio.c (default 25)
+#define BUFFERS_PER_SECOND 30
 
 #endif

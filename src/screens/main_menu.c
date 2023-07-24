@@ -28,8 +28,10 @@ void main_menu_tick(game_state_t* game_state) {
             *game_state = HELP_MENU;
         }
     } else if (stick_up() || dpad_up()) {
+        sfx_play(SFX_SELECT);
         menu_selection = (menu_selection - 1 + menu_options) % menu_options;
     } else if (stick_down() || dpad_down()) {
+        sfx_play(SFX_SELECT);
         menu_selection = (menu_selection + 1) % menu_options;
     }
 }
