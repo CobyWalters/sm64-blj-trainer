@@ -50,7 +50,7 @@ sox path/to/inputfile.wav -b16 -c2 path/to/outputfile.wav
 
 ## Credits
 * xandrey - initial python code
-* coby - porting to n64
+* rollercobester - porting to n64
 
 Special thanks to xandrey, wermi, kolunio, LFoxyIsBlue, GTM, and GreenSuigi.
 
