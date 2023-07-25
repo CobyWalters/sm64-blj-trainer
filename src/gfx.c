@@ -60,10 +60,7 @@ color_t gfx_blend_colors(color_t color_1, int color_1_weight, color_t color_2, i
 void gfx_display_lock(void) {
     /* Grab a render buffer */
     static display_context_t disp = 0;
-    while (!(disp = display_lock())) {
-        /* Spinlock! */
-        //lowlatency_poll();
-    }
+    while (!(disp = display_lock())) {/* Spinlock! */}
     gfx->disp = disp;
 }
 
