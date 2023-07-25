@@ -17,7 +17,7 @@ static rhythm_mode_t rhythm_mode = FRAMES_1_4_8;
 bool is_blj_frame(int frame) {
     if (frame == 6 && rhythm_mode == FRAMES_1_4_8)
         return false;
-    return frame % 2 == (int) (frame <= 2);
+    return frame % 2 == (int) (frame < 3);
 }
 
 int get_first_bad_input_frame() {
