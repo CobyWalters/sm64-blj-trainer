@@ -15,6 +15,7 @@ On the about/help screen:
 * B - return to main menu
 
 On the practice tool screen:
+* Start - toggle audio (you should definitely mute on emulator because of the audio latency)
 * A - record blj frame
 * B - return to main menu
 
