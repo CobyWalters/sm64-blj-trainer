@@ -1,7 +1,7 @@
 /**
  * sm64bljtrainer-N64 - gfx.h
  *
- * Copyright 2023, Coby Walters
+ * Copyright 2023, rollercobester
  *
  * This source code is licensed under the MIT-style license found in the
  * LICENSE.txt file in the root directory of this source tree.
@@ -13,11 +13,12 @@
 #include <libdragon.h>
 #include "system.h"
 
-#define COLOR_BLACK gfx_make_color(0,   0,   0,   255)
-#define COLOR_GRAY  gfx_make_color(100, 100, 100, 255)
-#define COLOR_WHITE gfx_make_color(255, 255, 255, 255)
-#define COLOR_RED   gfx_make_color(223, 104, 93,  255)
-#define COLOR_GREEN gfx_make_color(35,  176, 58,  255)
+#define COLOR_BLACK      gfx_make_color(0,   0,   0,   255)
+#define COLOR_GRAY       gfx_make_color(100, 100, 100, 255)
+#define COLOR_LIGHT_GRAY gfx_make_color(175, 175, 175, 255)
+#define COLOR_WHITE      gfx_make_color(255, 255, 255, 255)
+#define COLOR_RED        gfx_make_color(223, 104, 93,  255)
+#define COLOR_GREEN      gfx_make_color(35,  176, 58,  255)
 
 typedef enum {
     BUFFERING_DOUBLE = 2,

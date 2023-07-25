@@ -1,21 +1,20 @@
 /**
  * sm64bljtrainer-N64 - input.c
  *
- * Copyright 2023, Coby Walters
+ * Copyright 2023, rollercobester
  *
  * This source code is licensed under the MIT-style license found in the
  * LICENSE.txt file in the root directory of this source tree.
  */
 
 #include "input.h"
-#include "text.h"
 
 controllers_state_t pressed_keys;
 controllers_state_t held_keys;
 int stick_up_frames[4];
 int stick_down_frames[4];
 
-void input_tick(void) {
+void input_tick() {
     pressed_keys = get_keys_down();
     held_keys = get_keys_held();
     for (int i = 0; i < 4; ++i) {
@@ -38,6 +37,27 @@ bool b_press() {
     return false;
 }
 
+bool l_press() {
+    for (int i = 0; i < 4; ++i)
+        if (pressed_keys.c[i].L)
+            return true;
+    return false;
+}
+
+bool r_press() {
+    for (int i = 0; i < 4; ++i)
+        if (pressed_keys.c[i].R)
+            return true;
+    return false;
+}
+
+bool start_press() {
+    for (int i = 0; i < 4; ++i)
+        if (pressed_keys.c[i].start)
+            return true;
+    return false;
+}
+
 bool dpad_up() {
     for (int i = 0; i < 4; ++i)
         if (pressed_keys.c[i].up)
@@ -54,14 +74,14 @@ bool dpad_down() {
 
 bool stick_up() {
     for (int i = 0; i < 4; ++i)
-        if (stick_up_frames[i] == 1 || (stick_up_frames[i] > 10 && stick_up_frames[i] % 4 == 0))
+        if (stick_up_frames[i] == 1 || (stick_up_frames[i] > 10 && stick_up_frames[i] % 4 == 1))
             return true;
     return false;
 }
 
 bool stick_down() {
     for (int i = 0; i < 4; ++i)
-        if (stick_down_frames[i] == 1 || (stick_down_frames[i] > 10 && stick_down_frames[i] % 4 == 0))
+        if (stick_down_frames[i] == 1 || (stick_down_frames[i] > 10 && stick_down_frames[i] % 4 == 1))
             return true;
     return false;
 }

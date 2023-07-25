@@ -1,7 +1,7 @@
 /**
  * sm64bljtrainer-N64 - system.h
  *
- * Copyright 2023, Coby Walters
+ * Copyright 2023, rollercobester
  *
  * This source code is licensed under the MIT-style license found in the
  * LICENSE.txt file in the root directory of this source tree.
@@ -17,10 +17,6 @@
 #include <stdbool.h>
 #include <libdragon.h>
 #include <limits.h>
-
-typedef int64_t ticks_t;
-
-#define TICKS_PER_MS ((ticks_t)(TICKS_PER_SECOND / 1000))
 
 typedef enum {
     MAIN_MENU,

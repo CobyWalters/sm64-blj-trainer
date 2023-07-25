@@ -1,7 +1,7 @@
 /**
  * sm64bljtrainer-N64 - about_screen.c
  *
- * Copyright 2023, Coby Walters
+ * Copyright 2023, rollercobester
  *
  * This source code is licensed under the MIT-style license found in the
  * LICENSE.txt file in the root directory of this source tree.
@@ -24,7 +24,7 @@ void about_screen_draw() {
     /* Draw body text */
     text_set_font(FONT_MEDIUM);
     text_draw_wordwrap(32, 44, 320-64, 
-        "a sm64 blj rhythm trainer ROM by coby\n\n"
+        "a sm64 blj rhythm trainer ROM by rollercobester\n\n"
         "Enter Command font by Font End Dev (fontenddev.com), licensed "
         "under CC BY 4.0\n\n"
         "This ROM is a n64 port of xandrey's practice tool. The GUI is "
