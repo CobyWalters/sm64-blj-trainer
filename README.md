@@ -15,7 +15,8 @@ On the about/help screen:
 * B - return to main menu
 
 On the practice tool screen:
-* Start - toggle audio (you should definitely mute on emulator because of the audio latency)
+Importatnt - The audio may sound completely wrong or have a slight delay on emulator depending on which one you are using. I recommend muting unless playing on actual N64 hardware.
+* Start - toggle audio
 * A - record blj frame
 * B - return to main menu
 
