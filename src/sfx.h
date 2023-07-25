@@ -14,7 +14,6 @@
 
 typedef enum {
     SFX_CLICK,
-    SFX_DUMMY,
     SFX_ID_COUNT, /* Not an actual ID, just a counter */
 } sfx_id_t;
 
