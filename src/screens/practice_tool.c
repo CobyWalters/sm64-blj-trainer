@@ -11,14 +11,20 @@
 
 static bool blj_frames[30];
 static int current_frame = 0;
-static int frame_gap = 0;
-  
+static int frame_gap = -1;
+static rhythm_mode_t rhythm_mode = FRAMES_1_4_8;
+
+bool is_blj_frame(int frame) {
+    if (frame == 6 && rhythm_mode == FRAMES_1_4_8)
+        return false;
+    return frame % 2 == (int) (frame < 3);
+}
+
 int get_first_bad_input_frame() {
-    if (blj_frames[1])  return 2;
-    if (blj_frames[2])  return 3;
+    if ( blj_frames[2]) return 3;
     if (!blj_frames[3]) return 4;
-    if (blj_frames[4])  return 5;
-    if (blj_frames[6])  return 7;
+    if ( blj_frames[4]) return 5;
+    if ( blj_frames[6]) return 7;
     if (!blj_frames[5] && !blj_frames[7]) return 8;
     return -1;
 }
@@ -27,45 +33,69 @@ void practice_tool_tick(game_state_t* game_state) {
     
     if (b_press()) {
         *game_state = MAIN_MENU;
+        return;
     }
 
-    /* Advance the frame if timer is running */
-    if (current_frame > 0 && current_frame < 30) {
-        ++current_frame;
-    }
+    if (l_press()) 
+        rhythm_mode = FRAMES_1_4_6;
+    if (r_press()) 
+        rhythm_mode = FRAMES_1_4_8;
+    if (start_press()) 
+        sfx_toggle_audio();
+    if (a_press()) {
 
-    if (!a_press()) {
-        ++frame_gap;
-    } else {
         if (current_frame == 0 || frame_gap > 5) {
             /* Reset the timer if needed */
             for (int i = 0; i < 30; ++i) {
                 blj_frames[i] = false;
             }
             current_frame = 1;
-        }
+        } 
+
         blj_frames[current_frame - 1] = true;
-        frame_gap = 0;
+        frame_gap = -1;
     }
+    
+    if (current_frame && current_frame < 30) {
+        if (is_blj_frame(current_frame)) {
+            sfx_play(SFX_CLICK);
+        }
+        ++current_frame;
+    }
+
+    ++frame_gap;
 }
 
 void practice_tool_draw() {
 
     /* Draw FPS*/
-    fps_draw();
+    //fps_draw();
+
+    /* Draw repo url */
+    gfx_set_color(COLOR_WHITE);
+    text_set_font(FONT_MEDIUM);
+    text_draw(gfx->width/2, 216, "github.com/rollercobester/sm64-blj-trainer", ALIGN_CENTER);
 
     /* Draw frame counter */
-    text_set_font(FONT_MEDIUM);
+    text_set_font(FONT_BOLD);
     char frame_text[10];
     sprintf(frame_text, "Frame: %d", current_frame);
     text_draw(32, 24, frame_text, ALIGN_LEFT);
-    
-    /* Draw repo url */
-    text_draw(gfx->width/2, 201, "github.com/rollercobester/sm64-blj-trainer", ALIGN_CENTER);
 
+    /* Draw rhythm mode */
+    gfx_set_color((rhythm_mode == FRAMES_1_4_6 ? COLOR_WHITE: COLOR_GRAY));
+    text_draw(gfx->width - 70, 24, "1 4 6", ALIGN_RIGHT);
+    gfx_set_color(COLOR_LIGHT_GRAY);
+    text_draw(gfx->width - 63, 24, "-", ALIGN_RIGHT);
+    gfx_set_color((rhythm_mode == FRAMES_1_4_8 ? COLOR_WHITE: COLOR_GRAY));
+    text_draw(gfx->width - 32, 24, "1 4 8", ALIGN_RIGHT);
+
+    gfx_set_color(COLOR_WHITE);
     /* Draw starting text */
     if (current_frame == 0) {
         text_draw(gfx->width/2, gfx->height/2, "Press a to start.", ALIGN_CENTER);
+        text_set_font(FONT_MEDIUM);
+        text_draw(gfx->width/2, gfx->height/2 + 30, "Press start to toggle audio", ALIGN_CENTER);
         return;
     }
 
@@ -94,7 +124,6 @@ void practice_tool_draw() {
     if (!red_text_index) red_text_index = 63;
 
     /* Draw the blj frames */
-    text_set_font(FONT_BOLD);
     gfx_set_color(COLOR_GREEN);
     text_draw_partial(gfx->width/2, gfx->height/2 - 5, blj_frame_text, ALIGN_CENTER, 0, red_text_index);
     gfx_set_color(COLOR_RED);

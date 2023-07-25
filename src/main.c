@@ -18,8 +18,10 @@
 #include "screens/help_menu.c"
 #include "screens/main_menu.c"
 #include "screens/practice_tool.c"
+#include "input.h"
 #include "fps.h"
 #include "gfx.h"
+#include "sfx.h"
 #include "system.h"
 
 void reset_handler(exception_t *ex) {
@@ -31,6 +33,8 @@ void reset_handler(exception_t *ex) {
     abort();
 }
 
+int16_t *sfx;
+
 int main(void) {
 
     /* Initialize libdragon subsystems */
@@ -41,6 +45,7 @@ int main(void) {
     /* Initialize game subsystems */
     gfx_init(RESOLUTION_320x240, DEPTH_32_BPP, BUFFERING_DOUBLE, GAMMA_NONE,
         ANTIALIAS_RESAMPLE);
+    sfx_init();
     text_init();
 
     console_set_debug(true);
@@ -49,6 +54,7 @@ int main(void) {
     /* Initialize game state */
     game_state_t game_state = MAIN_MENU;
 
+    /* Initial scan to avoid garbage input */
     controller_scan();
 
     /* Run the main loop */
@@ -77,12 +83,11 @@ int main(void) {
                 help_menu_tick(&game_state);
                 break;
         }
-        
+
         /* Grab a display buffer and start drawing */
         gfx_display_lock();
         gfx_set_color(COLOR_WHITE);
         graphics_fill_screen(gfx->disp, graphics_convert_color(COLOR_BLACK));
-
         switch (game_state) {
             case MAIN_MENU:
                 main_menu_draw();

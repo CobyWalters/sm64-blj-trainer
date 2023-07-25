@@ -12,10 +12,14 @@
 
 #include <libdragon.h>
 #include "system.h"
+#include "sfx.h"
 
 void input_tick();
 bool a_press();
 bool b_press();
+bool l_press();
+bool r_press();
+bool start_press();
 bool dpad_up();
 bool dpad_down();
 bool stick_up();

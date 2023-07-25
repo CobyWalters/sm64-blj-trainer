@@ -2,3 +2,6 @@
 	path = libdragon
 	url = https://github.com/DragonMinded/libdragon/
 	branch = trunk
+[submodule "sox"]
+	path = sox
+	url = https://git.code.sf.net/p/sox/code

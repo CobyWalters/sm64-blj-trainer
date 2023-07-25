@@ -18,10 +18,6 @@
 #include <libdragon.h>
 #include <limits.h>
 
-typedef int64_t ticks_t;
-
-#define TICKS_PER_MS ((ticks_t)(TICKS_PER_SECOND / 1000))
-
 typedef enum {
     MAIN_MENU,
     PRACTICE_TOOL,

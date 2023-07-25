@@ -37,6 +37,17 @@ libdragon make
 
 After that, the ROM should be possible to compile with just `libdragon make`.
 
+## For developers
+I tried to make this ROM with simple design principles. What I was unable to do was implement a low latency audio system that didnt require a few additional programs and manual preprocessing. Here are the steps to formatting your .wav files into .raw files:
+1) Install sox at https://sox.sourceforge.net/
+2) Convert your .wav file to 16 bit stereo:
+```
+sox path/to/inputfile.wav -b16 -c2 path/to/outputfile.wav
+```
+3) Install Audio File Converter at https://www.nch.com.au/switch/index.html
+4) Add the .wav file
+5) Convert after selecting output format: .raw with the options - Format: 16 bit PCM (Big Endian), Sample rate: 16000 Hz, Channels: Stereo
+
 ## Credits
 * xandrey - initial python code
 * coby - porting to n64
