@@ -8,7 +8,7 @@ Latest version of the ROM can be found [here](https://github.com/rollercobester/
 
 ## Basic controls
 In the main menu:
-* D-Pad - select option
+* D-Pad or analog stick - select option
 * A - confirm selection
 
 On the about/help screen:
@@ -23,11 +23,11 @@ Importatnt - The audio may sound completely wrong or have a slight delay on emul
 Additional informations on usage can be found in the help screen built into the ROM.
 
 ## Building
-To build the ROM, you will need to have [libdragon](https://libdragon.dev/) set up. 
+If you would like to build the ROM yourself, you will need to have [libdragon](https://libdragon.dev/) set up. 
 
 Clone the repository (including submodules) and navigate to the directory:
 ```
-git clone --recurse-submodules https://github.com/CobyWalters/sm64-blj-trainer/
+git clone --recurse-submodules https://github.com/rollercobester/sm64-blj-trainer/
 cd sm64-blj-trainer
 ```
 
@@ -52,9 +52,9 @@ sox path/to/inputfile.wav -b16 -c2 path/to/outputfile.wav
 
 ## Credits
 * xandrey - initial python code
-* coby - porting to n64
+* rollercobester - porting to n64
 
-Special thanks to xandrey, wermi, kolunio, GTM_, and GreenSuigi.
+Special thanks to xandrey, wermi, kolunio, LFoxyIsBlue, GTM, and GreenSuigi.
 
 ### 3rd party assets
 * [Enter Command font by Font End Dev](https://fontenddev.com/fonts/enter-command/), licensed under CC BY 4.0
