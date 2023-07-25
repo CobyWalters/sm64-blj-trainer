@@ -1,7 +1,7 @@
 /**
  * sm64bljtrainer-N64 - practice_tool.h
  *
- * Copyright 2023, Coby Walters
+ * Copyright 2023, rollercobester
  *
  * This source code is licensed under the MIT-style license found in the
  * LICENSE.txt file in the root directory of this source tree.
