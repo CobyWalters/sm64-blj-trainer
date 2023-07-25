@@ -24,33 +24,6 @@ $(ROMNAME): $(DFS_FILE)
 # Create a directory for files that will go into the DFS
 $(shell mkdir -p $(FS_DIR))
 
-# ----------------- File conversions -----------------
-#.all: sox
-#WAV_FILES := $(shell find $(RES_DIR) -type f -name '*.wav')
-#FS_WAV_FILES := $(patsubst $(RES_DIR)/%, $(FS_DIR)/%, $(WAV_FILES))
-#$(FS_WAV_FILES): $(FS_DIR)/% : $(RES_DIR)/%
-#	@mkdir -p $(@D)
-#	@echo eeee - sox $< -b16 -c2 $@
-#	sox $< -b16 -c2 $@
-
-#WAV_64FILES  := $(WAV_FILES:$(RES_DIR)/%.wav=$(FS_DIR)/%.wav64)
-
-# TODO: Convert .wav files to 16 bit stereo
-WAV_FILES := $(shell find $(RES_DIR) -type f -name '*.wav')
-#FS_16BIT_WAV_FILES := $(patsubst $(RES_DIR)/%, $(FS_DIR)/%, $(WAV_FILES))
-#$(FS_16BIT_WAV_FILES): $(FS_DIR)/% : $(RES_DIR)/%
-#	@mkdir -p $(@D)
-#	sox $< -b16 -c2 $@
-
-# Convert .wav files to .wav64 files
-FS_WAV64_FILES  := $(patsubst $(RES_DIR)/%.wav, $(FS_DIR)/%.wav64, $(WAV_FILES))
-$(FS_WAV64_FILES): $(FS_DIR)/%.wav64 : $(RES_DIR)/%.wav $(N64_AUDIOCONV)
-	@echo eeeeeeeeeeeeeeeee
-	@mkdir -p $(@D)
-	$(N64_AUDIOCONV) -o $@ $<
-
-# TODO: Convert .wav files into raw files?
-
 # -------------------- File copy --------------------
 
 RAW_FILES := $(shell find $(RES_DIR) -type f -name '*.raw')
@@ -72,7 +45,7 @@ $(FS_BIN_FILES): $(FS_DIR)/% : $(RES_DIR)/%
 	cp $< $@
 
 # Move resources to DFS
-$(DFS_FILE): $(FS_WAV64_FILES) $(FS_16BIT_WAV_FILES) $(FS_RAW_FILES) $(FS_SPRITE_FILES) $(FS_BIN_FILES)
+$(DFS_FILE): $(FS_RAW_FILES) $(FS_SPRITE_FILES) $(FS_BIN_FILES)
 	$(N64_MKDFS) $@ $(FS_DIR)
 
 SRCS := $(wildcard $(SOURCE_DIR)/*.c)
