@@ -28,7 +28,6 @@ static const int SFX_FILE_SIZE[SFX_ID_COUNT] = {
 
 void sfx_init(void) {
     audio_enabled = true;
-
     audio_init(SFX_SAMPLE_RATE, SFX_NUM_BUFFERS);
     audio_write_silence();
     for (size_t i = 0; i < SFX_ID_COUNT; ++i) {
@@ -38,7 +37,6 @@ void sfx_init(void) {
 
 void sfx_play(sfx_id_t sfx_id) {
     if (!audio_enabled) return;
-
     uint8_t* buf = (uint8_t*) audio_write_begin();
     memcpy(buf, sfx_audio[sfx_id], SFX_FILE_SIZE[sfx_id]);
     memset(buf + SFX_FILE_SIZE[sfx_id], 0, audio_get_buffer_length() * 4 - SFX_FILE_SIZE[sfx_id]);
