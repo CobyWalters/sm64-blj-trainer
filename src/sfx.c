@@ -16,7 +16,7 @@ static bool audio_enabled;
 
 /* This array must line up with sfx_id_t */
 static const char *const sfx_files[SFX_ID_COUNT] = {
-    "sfx/16bitclick.raw",
+    "sfx/click.raw",
 };
 
 int16_t* sfx_audio[SFX_ID_COUNT];
