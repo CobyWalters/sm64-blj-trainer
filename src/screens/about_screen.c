@@ -26,7 +26,9 @@ void about_screen_draw() {
     text_draw_wordwrap(32, 44, 320-64, 
         "a sm64 blj rhythm trainer ROM by rollercobester\n\n"
         "Enter Command font by Font End Dev (fontenddev.com), licensed "
-        "under CC BY 4.0\n\n"
+        "under CC BY 4.0\n"
+        "On or Off Light Switch Tap sound effect by Mixkit (mixkit.co),"
+        "licensed under Mixkit License\n\n"
         "This ROM is a n64 port of xandrey's practice tool. The GUI is "
         "heavily inspired by wermi's controller test ROM "
         "(github.com/wermipls/mimi).\n\n"
