@@ -9,10 +9,10 @@
 
 #include "practice_tool.h"
 
+static rhythm_mode_t rhythm_mode = FRAMES_1_4_8;
 static bool blj_frames[30];
 static int current_frame = 0;
 static int frame_gap = -1;
-static rhythm_mode_t rhythm_mode = FRAMES_1_4_8;
 
 bool is_blj_frame(int frame) {
     if (frame == 6 && rhythm_mode == FRAMES_1_4_8)
@@ -29,10 +29,9 @@ int get_first_bad_input_frame() {
     return -1;
 }
 
-void practice_tool_tick(game_state_t* game_state) {
-    
+void practice_tool_tick() {
     if (b_press()) {
-        *game_state = MAIN_MENU;
+        game_state = MAIN_MENU;
         return;
     }
 
@@ -55,25 +54,21 @@ void practice_tool_tick(game_state_t* game_state) {
         blj_frames[current_frame - 1] = true;
         frame_gap = -1;
     }
-    
+
     if (current_frame && current_frame < 30) {
         if (is_blj_frame(current_frame)) {
             sfx_play(SFX_CLICK);
         }
         ++current_frame;
     }
-
     ++frame_gap;
 }
 
 void practice_tool_draw() {
-
     /* Draw FPS*/
     //fps_draw();
 
     /* Draw repo url */
-    gfx_set_color(COLOR_WHITE);
-    text_set_font(FONT_MEDIUM);
     text_draw(gfx->width/2, 216, "github.com/rollercobester/sm64-blj-trainer", ALIGN_CENTER);
 
     /* Draw frame counter */

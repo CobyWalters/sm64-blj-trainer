@@ -10,7 +10,6 @@
 #ifndef PRACTICE_TOOL_H
 #define PRACTICE_TOOL_H
 
-#include <string.h>
 #include "../fps.h"
 #include "../gfx.h"
 #include "../input.h"
@@ -25,7 +24,7 @@ typedef enum {
 
 bool is_blj_frame(int frame);
 int get_first_bad_input_frame();
-void practice_tool_tick(game_state_t* game_state);
+void practice_tool_tick();
 void practice_tool_draw();
 
 #endif

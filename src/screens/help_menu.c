@@ -9,14 +9,13 @@
 
 #include "help_menu.h"
 
-void help_menu_tick(game_state_t* game_state) {
+void help_menu_tick() {
     if (b_press()) {
-        *game_state = MAIN_MENU;
+        game_state = MAIN_MENU;
     }
 }
 
 void help_menu_draw() {
-
     /* Draw title */
     text_set_font(FONT_BOLD);
     text_draw(32, 24, "Help", ALIGN_LEFT);

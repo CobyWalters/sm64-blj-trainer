@@ -18,14 +18,14 @@ static const char *options[] = {
 static int menu_selection = 0;
 static int menu_options = sizeof(options)/sizeof(char*);
 
-void main_menu_tick(game_state_t* game_state) {
+void main_menu_tick() {
     if (a_press()) {
         if (menu_selection == 0) {
-            *game_state = PRACTICE_TOOL;
+            game_state = PRACTICE_TOOL;
         } else if (menu_selection == 1) {
-            *game_state = ABOUT_SCREEN;
+            game_state = ABOUT_SCREEN;
         } else if (menu_selection == 2) {
-            *game_state = HELP_MENU;
+            game_state = HELP_MENU;
         }
     } else if (stick_up() || dpad_up()) {
         menu_selection = (menu_selection - 1 + menu_options) % menu_options;
@@ -35,7 +35,6 @@ void main_menu_tick(game_state_t* game_state) {
 }
 
 void main_menu_draw() {
-
     /* Draw title */
     text_set_font(FONT_BOLD);
     text_draw(32, 24, "sm64 blj rhythm trainer", ALIGN_LEFT);

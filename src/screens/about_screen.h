@@ -14,7 +14,7 @@
 #include "../system.h"
 #include "../text.h"
 
-void about_screen_tick(game_state_t* game_state);
-void about_screen_draw(void);
+void about_screen_tick();
+void about_screen_draw();
 
 #endif

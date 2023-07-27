@@ -61,7 +61,6 @@ int text_get_word_width(const char s[]) {
 
 /* Draws part of the text, as if the rest of the letters were invisible */
 void text_draw_partial(int x, int y, const char s[], enum TextAlign align, int start, int end) {
-
     color_t text_color = gfx_get_color();
     color_t shadow_color = gfx_blend_colors(text_color, 1, COLOR_BLACK, 2);
 
@@ -114,7 +113,6 @@ void text_draw_wordwrap(int x, int y, int w, const char s[]) {
         } else if (s[i] == ' ') {
             int word_width = text_get_word_width(&s[i + 1]);
             int remaining_width = w - x_offset - space_width;
-
             if (word_width > remaining_width) {
                 x_offset = 0;
                 y_offset += line_height;

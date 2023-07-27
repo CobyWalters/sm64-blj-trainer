@@ -10,7 +10,6 @@
 #ifndef GFX_H
 #define GFX_H
 
-#include <libdragon.h>
 #include "system.h"
 
 #define COLOR_BLACK      gfx_make_color(0,   0,   0,   255)
@@ -26,7 +25,6 @@ typedef enum {
 } buffer_mode_t;
 
 typedef struct gfx_s {
-    // Setup state
     resolution_t res;
     int width;
     int height;
@@ -34,23 +32,21 @@ typedef struct gfx_s {
     buffer_mode_t num_buffers;
     gamma_t gamma;
     antialias_t antialias;
-    // Drawing state
     display_context_t disp;
     color_t color;
 } gfx_t;
 
-extern gfx_t *gfx;
+extern gfx_t* gfx;
 
-void gfx_init(resolution_t res, bitdepth_t bit, buffer_mode_t num_buffers,
-    gamma_t gamma, antialias_t aa);
+void gfx_init(resolution_t res, bitdepth_t bit, buffer_mode_t num_buffers, gamma_t gamma, antialias_t aa);
 
 void gfx_set_color(color_t color);
-color_t gfx_get_color(void);
+color_t gfx_get_color();
 color_t gfx_make_color(int r, int g, int b, int a);
 color_t gfx_blend_colors(color_t color_1, int color_1_weight, color_t color_2, int color_2_weight);
 
-void gfx_display_lock(void);
-void gfx_display_flip(void);
+bool gfx_display_lock(display_context_t);
+void gfx_display_flip();
 sprite_t *read_dfs_sprite(const char *file);
 
 #endif

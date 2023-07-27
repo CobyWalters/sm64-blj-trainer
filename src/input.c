@@ -17,7 +17,7 @@ int stick_down_frames[4];
 void input_tick() {
     pressed_keys = get_keys_down();
     held_keys = get_keys_held();
-    for (int i = 0; i < 4; ++i) {
+    for (size_t i = 0; i < 4; i++) {
         stick_up_frames[i] = held_keys.c[i].y > 60 ? stick_up_frames[i] + 1 : 0;
         stick_down_frames[i] = held_keys.c[i].y < -60 ? stick_down_frames[i] + 1 : 0;
     }

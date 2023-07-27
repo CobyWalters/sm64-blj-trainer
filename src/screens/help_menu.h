@@ -14,7 +14,7 @@
 #include "../system.h"
 #include "../text.h"
 
-void help_menu_tick(game_state_t* game_state);
-void help_menu_draw(void);
+void help_menu_tick();
+void help_menu_draw();
 
 #endif
