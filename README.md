@@ -58,6 +58,7 @@ Special thanks to xandrey, wermi, kolunio, LFoxyIsBlue, GTM, and GreenSuigi.
 
 ### 3rd party assets
 * [Enter Command font by Font End Dev](https://fontenddev.com/fonts/enter-command/), licensed under CC BY 4.0
+* [On or Off Light Switch Tap by Mixkit](https://assets.mixkit.co/active_storage/sfx/2585/2585.wav), licensed under Mixkit License
 
 ## License
 MIT

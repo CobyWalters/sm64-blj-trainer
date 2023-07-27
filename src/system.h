@@ -16,7 +16,6 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include <libdragon.h>
-#include <limits.h>
 
 typedef enum {
     MAIN_MENU,
@@ -24,6 +23,8 @@ typedef enum {
     ABOUT_SCREEN,
     HELP_MENU
 } game_state_t;
+
+extern game_state_t game_state;
 
 typedef struct SI_condat gamepad_state_t;
 typedef struct controller_data controllers_state_t;

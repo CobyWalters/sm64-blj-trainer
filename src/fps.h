@@ -19,7 +19,7 @@ typedef int64_t ticks_t;
 #define FPS_TICKS_PER_FRAME ((unsigned int) (TICKS_PER_SECOND / FPS_MAX))
 #define FPS_TEXT_LEN        ((size_t) 11)
 
-bool fps_tick(void);
-void fps_draw(void);
+bool fps_frame_lock();
+void fps_draw();
 
 #endif

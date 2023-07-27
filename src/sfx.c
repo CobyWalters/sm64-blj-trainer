@@ -26,7 +26,7 @@ static const int SFX_FILE_SIZE[SFX_ID_COUNT] = {
     2108,
 };
 
-void sfx_init(void) {
+void sfx_init() {
     audio_enabled = true;
     audio_init(SFX_SAMPLE_RATE, SFX_NUM_BUFFERS);
     audio_write_silence();
@@ -35,16 +35,16 @@ void sfx_init(void) {
     }
 }
 
+void sfx_toggle_audio() {
+    audio_enabled = !audio_enabled;
+}
+
 void sfx_play(sfx_id_t sfx_id) {
     if (!audio_enabled) return;
     uint8_t* buf = (uint8_t*) audio_write_begin();
     memcpy(buf, sfx_audio[sfx_id], SFX_FILE_SIZE[sfx_id]);
     memset(buf + SFX_FILE_SIZE[sfx_id], 0, audio_get_buffer_length() * 4 - SFX_FILE_SIZE[sfx_id]);
     audio_write_end();
-}
-
-void sfx_toggle_audio() {
-    audio_enabled = !audio_enabled;
 }
 
 int16_t* read_dfs_raw_audio(const char *const file) {

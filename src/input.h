@@ -10,7 +10,6 @@
 #ifndef INPUT_H
 #define INPUT_H
 
-#include <libdragon.h>
 #include "system.h"
 #include "sfx.h"
 

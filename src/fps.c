@@ -12,19 +12,19 @@
 ticks_t last_frame_tick = 0;
 float average_fps = 0.0;
 
-bool fps_tick(void) {
-    /* Check timing to return if tick is a new frame tick */
+bool fps_frame_lock() {
+    /* Determine if current tick is a frame tick */
     const ticks_t current_tick = timer_ticks();
     if (current_tick >= last_frame_tick + FPS_TICKS_PER_FRAME) {
-        average_fps = (float)(TICKS_PER_SECOND) / (current_tick - last_frame_tick);
+        average_fps = (float) (TICKS_PER_SECOND) / (current_tick - last_frame_tick);
         last_frame_tick = current_tick;
-        return true;
+        return false;
     }
-    return false;
+    return true;
 }
 
 
-void fps_draw(void) {
+void fps_draw() {
     text_set_font(FONT_MEDIUM);
     static char fps_text[FPS_TEXT_LEN];
     const char *const fps_text_format = "FPS: %.2f";

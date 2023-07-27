@@ -17,9 +17,9 @@ typedef enum {
     SFX_ID_COUNT, /* Not an actual ID, just a counter */
 } sfx_id_t;
 
-void sfx_init(void);
-void sfx_play(sfx_id_t sfx_id);
+void sfx_init();
 void sfx_toggle_audio();
+void sfx_play(sfx_id_t sfx_id);
 int16_t *read_dfs_raw_audio(const char *const file);
 
 #endif
